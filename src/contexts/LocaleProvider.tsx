@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { createContext, useContext, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Locale } from '@/types';
 
@@ -12,22 +12,12 @@ interface LocaleContextType {
 
 const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
 
-export function LocaleProvider({ children, initialLocale }: { children: React.ReactNode; initialLocale?: Locale }) {
+// This provider is now just for client-side locale switching
+export function LocaleProvider({ children, initialLocale }: { children: React.ReactNode; initialLocale: Locale }) {
   const router = useRouter();
-  const [locale, setLocaleState] = useState<Locale>(initialLocale || 'ua');
-
-  useEffect(() => {
-    // Get locale from URL or localStorage
-    const savedLocale = localStorage.getItem('locale') as Locale;
-    if (savedLocale && ['ua', 'en'].includes(savedLocale)) {
-      setLocaleState(savedLocale);
-    }
-  }, []);
 
   const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale);
     localStorage.setItem('locale', newLocale);
-
     // Update URL with new locale
     const currentPath = window.location.pathname;
     const pathWithoutLocale = currentPath.replace(/^\/(ua|en)/, '');
@@ -35,11 +25,12 @@ export function LocaleProvider({ children, initialLocale }: { children: React.Re
   }, [router]);
 
   const toggleLocale = useCallback(() => {
-    setLocale(locale === 'ua' ? 'en' : 'ua');
-  }, [locale, setLocale]);
+    const newLocale: Locale = initialLocale === 'ua' ? 'en' : 'ua';
+    setLocale(newLocale);
+  }, [initialLocale, setLocale]);
 
   return (
-    <LocaleContext.Provider value={{ locale, setLocale, toggleLocale }}>
+    <LocaleContext.Provider value={{ locale: initialLocale, setLocale, toggleLocale }}>
       {children}
     </LocaleContext.Provider>
   );
