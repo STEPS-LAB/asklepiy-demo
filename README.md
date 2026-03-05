@@ -191,3 +191,4 @@ The application is designed mobile-first with:
 ## 👥 Team
 
 Built with ❤️ by the Asklepiy Digital Team
+Force rebuild
