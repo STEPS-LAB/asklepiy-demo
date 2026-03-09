@@ -34,6 +34,13 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (window.location.pathname === '/' || window.location.pathname === '/ua' || window.location.pathname === '/en') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   // Disable body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -48,7 +55,7 @@ export function Header() {
       <motion.header
         className={cn(
           'fixed top-0 left-0 right-0 z-overlay transition-all duration-500',
-          isScrolled ? 'glass py-3 shadow-medical-md' : 'bg-transparent py-5'
+          isScrolled ? 'glass py-4 shadow-medical-md' : 'bg-transparent py-6'
         )}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -57,7 +64,7 @@ export function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="group">
+            <Link href="/" onClick={handleLogoClick} className="group flex items-center">
               <motion.div
                 className="relative w-[195px] h-[104px]"
                 whileHover={{ scale: 1.05 }}
