@@ -226,7 +226,7 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="section-title">
-              {locale === 'ua' ? 'Напрямки медицини' : 'Medical Directions'}
+              {locale === 'ua' ? 'Напрямки' : 'Medical Directions'}
             </h2>
             <p className="section-subtitle mx-auto">
               {locale === 'ua'
@@ -268,8 +268,10 @@ export default function HomePage() {
           >
             <Link href="/directions">
               <Button variant="outline">
-                {locale === 'ua' ? 'Всі напрямки' : 'All directions'}
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <span className="flex items-center">
+                  {locale === 'ua' ? 'Всі напрямки' : 'All directions'}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </span>
               </Button>
             </Link>
           </motion.div>
