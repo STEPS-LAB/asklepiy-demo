@@ -59,7 +59,7 @@ export function Header() {
             {/* Logo */}
             <Link href="/" className="group">
               <motion.div
-                className="relative w-20 h-20"
+                className="relative w-[150px] h-auto aspect-auto"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
