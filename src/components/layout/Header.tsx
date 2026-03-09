@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale } from '@/contexts';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Search, User } from 'lucide-react';
@@ -58,11 +59,16 @@ export function Header() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <motion.div
-                className="w-11 h-11 bg-gradient-to-br from-medical-primary-900 to-medical-primary-800 rounded-sm flex items-center justify-center shadow-md"
-                whileHover={{ scale: 1.05, rotate: 5 }}
+                className="relative w-14 h-14"
+                whileHover={{ scale: 1.05 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               >
-                <span className="text-white font-semibold text-lg">A</span>
+                <Image
+                  src="/images/logo.webp"
+                  alt={locale === 'ua' ? 'Асклепій' : 'Asklepiy'}
+                  fill
+                  className="object-contain"
+                />
               </motion.div>
               <motion.div
                 className="hidden sm:block"
