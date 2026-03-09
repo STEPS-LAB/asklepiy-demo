@@ -2,7 +2,7 @@
 
 import { useLocale } from '@/contexts';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -17,6 +17,7 @@ import {
   Phone
 } from 'lucide-react';
 import { Button, Card } from '@/components/ui';
+import { BookingModal } from '@/features/booking';
 import {
   ProgramsBanner,
   LaboratorySearch,
@@ -28,6 +29,7 @@ import {
   NewsSection,
   CallbackSection,
   PartnersSection,
+  StatisticsSection,
 } from '@/components/features/home';
 
 const services = [
@@ -62,29 +64,6 @@ const services = [
     description: 'Точні аналізи та обстеження',
     descriptionEn: 'Accurate tests and examinations',
     href: '/analyses',
-  },
-];
-
-const stats = [
-  {
-    value: '20+',
-    label: 'років досвіду',
-    labelEn: 'years of experience',
-  },
-  {
-    value: '50+',
-    label: 'лікарів',
-    labelEn: 'doctors',
-  },
-  {
-    value: '100K+',
-    label: 'пацієнтів',
-    labelEn: 'patients',
-  },
-  {
-    value: '500+',
-    label: 'послуг',
-    labelEn: 'services',
   },
 ];
 
@@ -123,7 +102,8 @@ export default function HomePage() {
   const { locale } = useLocale();
   const heroRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
-  
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   const heroY = useTransform(scrollY, [0, 500], [0, 150]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
@@ -163,11 +143,9 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <Link href="/booking">
-                  <Button size="lg" rightIcon={<ArrowRight className="w-4 h-4" />}>
-                    {locale === 'ua' ? 'Записатися на прийом' : 'Book Appointment'}
-                  </Button>
-                </Link>
+                <Button size="lg" rightIcon={<ArrowRight className="w-4 h-4" />} onClick={() => setIsBookingOpen(true)}>
+                  {locale === 'ua' ? 'Записатися на прийом' : 'Book Appointment'}
+                </Button>
                 <a href="tel:+380412123456">
                   <Button variant="outline" size="lg" leftIcon={<Phone className="w-4 h-4" />}>
                     {locale === 'ua' ? 'Зателефонувати' : 'Call Now'}
@@ -177,10 +155,10 @@ export default function HomePage() {
             </div>
 
             {/* Hero Image */}
-            <div className="relative hidden lg:block">
-              <div className="relative z-10 rounded-sm overflow-hidden shadow-medical-xl">
+            <div className="relative hidden lg:block flex items-center">
+              <div className="relative z-10 rounded-sm overflow-hidden shadow-medical-xl max-w-[85%] ml-auto w-full">
                 <div className="aspect-[4/5] bg-gradient-to-br from-medical-primary-200 to-medical-accent-200 flex items-center justify-center">
-                  <Stethoscope className="w-32 h-32 text-medical-primary-900/20" />
+                  <Stethoscope className="w-28 h-28 text-medical-primary-900/20" />
                 </div>
               </div>
               {/* Decorative elements */}
@@ -191,33 +169,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-medical-primary-900">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                className="text-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <span className="block text-4xl md:text-5xl font-secondary font-medium text-white mb-2">
-                  {stat.value}
-                </span>
-                <span className="text-medical-surface-300">
-                  {locale === 'ua' ? stat.label : stat.labelEn}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Statistics Section */}
+      <StatisticsSection />
 
       {/* Services Section */}
-      <section className="section bg-white">
+      <section className="section bg-medical-surface-50">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-12"
@@ -279,7 +235,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="section bg-medical-surface-50">
+      <section className="section bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-12"
@@ -372,11 +328,9 @@ export default function HomePage() {
                 : 'Schedule a consultation with our specialists'}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/booking">
-                <Button variant="secondary" size="lg">
-                  {locale === 'ua' ? 'Записатися на прийом' : 'Book Appointment'}
-                </Button>
-              </Link>
+              <Button variant="secondary" size="lg" onClick={() => setIsBookingOpen(true)}>
+                {locale === 'ua' ? 'Записатися на прийом' : 'Book Appointment'}
+              </Button>
               <Link href="/doctors">
                 <Button variant="outline" size="lg" className="bg-transparent border-white text-white hover:bg-white hover:text-medical-primary-900">
                   {locale === 'ua' ? 'Наші лікарі' : 'Our Doctors'}
@@ -386,6 +340,8 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </>
   );
 }

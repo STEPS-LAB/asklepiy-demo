@@ -250,10 +250,10 @@ export default function DirectionsPage() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.02 }}
-                    className="flex items-center gap-3 p-3 rounded-sm hover:bg-medical-surface-100 transition-colors cursor-pointer group"
+                    className="flex items-center gap-3 p-3 rounded-sm hover:bg-medical-surface-100 transition-all duration-300 cursor-pointer group"
                   >
-                    <div className="w-2 h-2 bg-medical-accent-400 rounded-full flex-shrink-0 group-hover:bg-medical-accent-600 transition-colors" />
-                    <span className="text-medical-text-secondary group-hover:text-medical-primary-900 transition-colors">
+                    <div className="w-2 h-2 bg-medical-accent-400 rounded-full flex-shrink-0 group-hover:bg-medical-accent-600 transition-all duration-300" />
+                    <span className="text-medical-text-secondary group-hover:text-medical-primary-900 group-hover:font-semibold transition-all duration-300">
                       {locale === 'ua' ? service.ua : service.en}
                     </span>
                   </motion.div>

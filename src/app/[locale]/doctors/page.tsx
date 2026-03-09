@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Star, MapPin, Calendar } from 'lucide-react';
 import { Card, Button } from '@/components/ui';
+import { BookingModal } from '@/features/booking';
+import { useState } from 'react';
 
 const doctors = [
   {
@@ -83,10 +85,10 @@ const doctors = [
 
 export default function DoctorsPage() {
   const { locale } = useLocale();
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <div className="container mx-auto px-4 py-12">
-      {/* Header */}
       <motion.div
         className="text-center mb-12"
         initial={{ opacity: 0, y: 30 }}
@@ -144,16 +146,23 @@ export default function DoctorsPage() {
                   </div>
                 </div>
 
-                <Link href={`/doctors/${doctor.slug}`}>
-                  <Button variant="outline" className="w-full">
-                    {locale === 'ua' ? 'Детальніше' : 'View Profile'}
+                <div className="flex gap-2">
+                  <Link href={`/doctors/${doctor.slug}`} className="flex-1">
+                    <Button variant="outline" className="w-full">
+                      {locale === 'ua' ? 'Детальніше' : 'View Profile'}
+                    </Button>
+                  </Link>
+                  <Button className="w-full" onClick={() => setIsBookingOpen(true)}>
+                    {locale === 'ua' ? 'Записатись' : 'Book'}
                   </Button>
-                </Link>
+                </div>
               </div>
             </Card>
           </motion.div>
         ))}
       </div>
+
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }

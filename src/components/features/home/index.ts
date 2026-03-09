@@ -8,3 +8,4 @@ export { ReviewsSection } from './ReviewsSection';
 export { NewsSection } from './NewsSection';
 export { CallbackSection } from './CallbackSection';
 export { PartnersSection } from './PartnersSection';
+export { StatisticsSection } from './StatisticsSection';

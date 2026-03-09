@@ -2,52 +2,57 @@
 
 import { useLocale } from '@/contexts';
 import { motion } from 'framer-motion';
-import { Search, Clock, DollarSign } from 'lucide-react';
-import { useState } from 'react';
+import { Search, Clock } from 'lucide-react';
+import { useState, useMemo } from 'react';
 import { Input, Button } from '@/components/ui';
 
-const sampleTests = [
-  {
-    id: 1,
-    name: { ua: 'Загальний аналіз крові', en: 'Complete Blood Count' },
-    price: 250,
-    turnaround: { ua: '1 день', en: '1 day' },
-  },
-  {
-    id: 2,
-    name: { ua: 'Біохімія крові (розширена)', en: 'Blood Biochemistry (extended)' },
-    price: 580,
-    turnaround: { ua: '1-2 дні', en: '1-2 days' },
-  },
-  {
-    id: 3,
-    name: { ua: 'Гормони щитоподібної залози', en: 'Thyroid Hormones' },
-    price: 420,
-    turnaround: { ua: '2 дні', en: '2 days' },
-  },
-  {
-    id: 4,
-    name: { ua: 'Аналіз сечі загальний', en: 'Urinalysis' },
-    price: 180,
-    turnaround: { ua: '1 день', en: '1 day' },
-  },
-  {
-    id: 5,
-    name: { ua: 'Глюкоза крові', en: 'Blood Glucose' },
-    price: 120,
-    turnaround: { ua: '1 день', en: '1 day' },
-  },
+// All lab tests from /analyses page
+const allAnalyses = [
+  { id: '1', name: { ua: 'Загальний аналіз крові', en: 'Complete blood count' }, price: 200, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '2', name: { ua: 'Глюкоза крові', en: 'Blood glucose' }, price: 150, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '3', name: { ua: 'Холестерин загальний', en: 'Total cholesterol' }, price: 180, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '4', name: { ua: 'ТТГ (тиреотропний гормон)', en: 'TSH (Thyroid stimulating hormone)' }, price: 350, turnaround: { ua: '2 дні', en: '2 days' } },
+  { id: '5', name: { ua: 'Вітамін D', en: 'Vitamin D' }, price: 550, turnaround: { ua: '3 дні', en: '3 days' } },
+  { id: '6', name: { ua: 'Феритин', en: 'Ferritin' }, price: 320, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '7', name: { ua: 'Біохімічний аналіз крові', en: 'Blood biochemistry' }, price: 450, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '8', name: { ua: 'Загальний аналіз сечі', en: 'Complete urinalysis' }, price: 180, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '9', name: { ua: 'Гормони щитоподібної залози', en: 'Thyroid hormones' }, price: 420, turnaround: { ua: '2 дні', en: '2 days' } },
+  { id: '10', name: { ua: 'Кортизол', en: 'Cortisol' }, price: 280, turnaround: { ua: '2 дні', en: '2 days' } },
+  { id: '11', name: { ua: 'Інсулін', en: 'Insulin' }, price: 300, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '12', name: { ua: 'Гемоглобін', en: 'Hemoglobin' }, price: 120, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '13', name: { ua: 'Лейкоцити', en: 'Leukocytes' }, price: 100, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '14', name: { ua: 'Еритроцити', en: 'Erythrocytes' }, price: 100, turnaround: { ua: '1 день', en: '1 day' } },
+  { id: '15', name: { ua: 'Тромбоцити', en: 'Platelets' }, price: 100, turnaround: { ua: '1 день', en: '1 day' } },
+];
+
+// Analysis categories from /analyses page
+const analysisCategories = [
+  { id: 'blood', name: { ua: 'Аналізи крові', en: 'Blood tests' } },
+  { id: 'urine', name: { ua: 'Аналізи сечі', en: 'Urine tests' } },
+  { id: 'hormones', name: { ua: 'Гормони', en: 'Hormones' } },
+  { id: 'biochemistry', name: { ua: 'Біохімія', en: 'Biochemistry' } },
+  { id: 'genetics', name: { ua: 'Генетика', en: 'Genetics' } },
+  { id: 'allergies', name: { ua: 'Алергопанелі', en: 'Allergy panels' } },
+  { id: 'infections', name: { ua: 'Інфекції', en: 'Infections' } },
 ];
 
 export function LaboratorySearch() {
   const { locale } = useLocale();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredTests = sampleTests.filter((test) =>
-    (locale === 'ua' ? test.name.ua : test.name.en)
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
-  );
+  const filteredTests = useMemo(() => {
+    if (!searchQuery.trim()) {
+      // Show first 5 tests by default
+      return allAnalyses.slice(0, 5);
+    }
+    
+    const query = searchQuery.toLowerCase();
+    return allAnalyses.filter((test) =>
+      (locale === 'ua' ? test.name.ua : test.name.en)
+        .toLowerCase()
+        .includes(query)
+    );
+  }, [searchQuery, locale]);
 
   return (
     <section className="py-16 bg-white">
@@ -83,10 +88,10 @@ export function LaboratorySearch() {
                 placeholder={locale === 'ua' ? 'Пошук аналізів...' : 'Search tests...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12"
+                className="pl-12 h-12"
               />
             </div>
-            <Button>
+            <Button className="h-12 px-8">
               {locale === 'ua' ? 'Знайти' : 'Search'}
             </Button>
           </div>
@@ -101,14 +106,14 @@ export function LaboratorySearch() {
         >
           <div className="bg-medical-surface-50 rounded-sm overflow-hidden">
             {/* Header */}
-            <div className="grid grid-cols-12 gap-4 p-4 bg-medical-primary-900 text-white font-medium">
-              <div className="col-span-6 md:col-span-6">
+            <div className="grid grid-cols-[50%_30%_20%] gap-4 p-4 bg-medical-primary-900 text-white font-medium">
+              <div>
                 {locale === 'ua' ? 'Назва' : 'Name'}
               </div>
-              <div className="col-span-3 md:col-span-3 text-center">
+              <div>
                 {locale === 'ua' ? 'Термін' : 'Turnaround'}
               </div>
-              <div className="col-span-3 md:col-span-3 text-right">
+              <div>
                 {locale === 'ua' ? 'Ціна' : 'Price'}
               </div>
             </div>
@@ -118,26 +123,25 @@ export function LaboratorySearch() {
               {filteredTests.map((test, index) => (
                 <motion.div
                   key={test.id}
-                  className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-medical-accent-50 transition-colors"
+                  className="grid grid-cols-[50%_30%_20%] gap-4 p-4 items-center hover:bg-medical-accent-50 transition-colors"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <div className="col-span-6 md:col-span-6">
+                  <div>
                     <span className="text-medical-primary-900 font-medium">
                       {locale === 'ua' ? test.name.ua : test.name.en}
                     </span>
                   </div>
-                  <div className="col-span-3 md:col-span-3 flex items-center justify-center gap-2 text-medical-text-secondary">
-                    <Clock className="w-4 h-4" />
-                    <span className="text-sm">
+                  <div className="flex items-center gap-2 text-medical-text-secondary">
+                    <Clock className="w-4 h-4 flex-shrink-0" />
+                    <span className="text-sm whitespace-nowrap">
                       {locale === 'ua' ? test.turnaround.ua : test.turnaround.en}
                     </span>
                   </div>
-                  <div className="col-span-3 md:col-span-3 flex items-center justify-end gap-2 text-medical-primary-900 font-medium">
-                    <DollarSign className="w-4 h-4" />
-                    <span>{test.price} ₴</span>
+                  <div className="flex items-center text-medical-primary-900 font-medium tabular-nums">
+                    {test.price} ₴
                   </div>
                 </motion.div>
               ))}

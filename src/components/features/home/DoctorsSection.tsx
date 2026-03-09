@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Star, Calendar, User } from 'lucide-react';
 import { Button } from '@/components/ui';
+import { BookingModal } from '@/features/booking';
+import { useState } from 'react';
 
 const doctors = [
   {
@@ -65,9 +67,11 @@ const doctors = [
 
 export function DoctorsSection() {
   const { locale } = useLocale();
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
-    <section className="section bg-medical-surface-50">
+    <>
+      <section className="section bg-medical-surface-50">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-12"
@@ -131,11 +135,9 @@ export function DoctorsSection() {
                       {locale === 'ua' ? 'Переглянути' : 'View Profile'}
                     </Button>
                   </Link>
-                  <Link href="/booking" className="flex-1">
-                    <Button className="w-full">
-                      {locale === 'ua' ? 'Записатись' : 'Book'}
-                    </Button>
-                  </Link>
+                  <Button className="w-full" onClick={() => setIsBookingOpen(true)}>
+                    {locale === 'ua' ? 'Записатись' : 'Book'}
+                  </Button>
                 </div>
               </div>
             </motion.div>
@@ -156,5 +158,8 @@ export function DoctorsSection() {
         </motion.div>
       </div>
     </section>
+
+    <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+    </>
   );
 }

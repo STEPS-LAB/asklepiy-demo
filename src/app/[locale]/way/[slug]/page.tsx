@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { Button, Input, Card } from '@/components/ui';
 import Link from 'next/link';
+import { BookingModal } from '@/features/booking';
 
 const departmentData = {
   gastroenterology: {
@@ -309,7 +310,7 @@ export default function WayPage() {
                       <Button variant="outline" className="flex-1">
                         {locale === 'ua' ? 'Переглянути' : 'View Profile'}
                       </Button>
-                      <Button className="flex-1">
+                      <Button className="flex-1" onClick={() => setIsBookingOpen(true)}>
                         {locale === 'ua' ? 'Записатись' : 'Book'}
                       </Button>
                     </div>
@@ -578,6 +579,8 @@ export default function WayPage() {
           </motion.div>
         </div>
       )}
+
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }
