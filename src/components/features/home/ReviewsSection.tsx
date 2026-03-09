@@ -128,11 +128,11 @@ export function ReviewsSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <Button variant="outline" asChild>
-            <a href="/reviews">
+          <a href="/reviews">
+            <Button variant="outline">
               {locale === 'ua' ? 'Всі відгуки' : 'All Reviews'}
-            </a>
-          </Button>
+            </Button>
+          </a>
         </motion.div>
       </div>
     </section>

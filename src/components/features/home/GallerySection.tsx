@@ -91,11 +91,11 @@ export function GallerySection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <Button variant="outline" asChild>
-            <a href="/gallery">
+          <a href="/gallery">
+            <Button variant="outline">
               {locale === 'ua' ? 'Переглянути всі фото' : 'View All Photos'}
-            </a>
-          </Button>
+            </Button>
+          </a>
         </motion.div>
       </div>
     </section>

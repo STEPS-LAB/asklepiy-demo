@@ -150,11 +150,11 @@ export function LaboratorySearch() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <Button variant="outline" asChild>
-              <a href="/analyses">
+            <a href="/analyses">
+              <Button variant="outline">
                 {locale === 'ua' ? 'Всі аналізи' : 'All Tests'}
-              </a>
-            </Button>
+              </Button>
+            </a>
           </motion.div>
         </motion.div>
       </div>
