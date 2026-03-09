@@ -227,14 +227,16 @@ export default function WayPage() {
                 className="mt-8"
                 onClick={() => setIsBookingOpen(true)}
               >
-                {locale === 'ua' ? 'Записатися на прийом' : 'Book an appointment'}
-                <ChevronRight className="w-5 h-5 ml-2" />
+                <span className="flex items-center">
+                  {locale === 'ua' ? 'Записатися на прийом' : 'Book an appointment'}
+                  <ChevronRight className="w-5 h-5 ml-2" />
+                </span>
               </Button>
             </div>
 
             <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-medical-accent-100 to-medical-surface-100 rounded-sm flex items-center justify-center">
-                <Stethoscope className="w-48 h-48 text-medical-accent-300" />
+              <div className="aspect-[4/3] bg-gradient-to-br from-medical-accent-100 to-medical-surface-100 rounded-sm flex items-center justify-center">
+                <Stethoscope className="w-32 h-32 text-medical-accent-300" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-sm shadow-medical-lg">
                 <div className="flex items-center gap-4">
@@ -268,7 +270,7 @@ export default function WayPage() {
                 : 'Highly qualified specialists with years of experience'}
             </p>
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {doctors.map((doctor, index) => (
                 <motion.div
                   key={index}
@@ -276,22 +278,42 @@ export default function WayPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
+                  className="bg-white rounded-sm overflow-hidden shadow-medical-md hover:shadow-medical-lg transition-shadow"
                 >
-                  <Card className="p-6 text-center hover:shadow-medical-lg transition-shadow">
-                    <div className="w-32 h-32 bg-gradient-to-br from-medical-accent-100 to-medical-surface-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                      <User className="w-16 h-16 text-medical-accent-400" />
-                    </div>
-                    <h3 className="text-xl font-medium text-medical-primary-900 mb-2">
+                  {/* Doctor Image Placeholder */}
+                  <div className="aspect-[4/5] bg-gradient-to-br from-medical-primary-200 to-medical-accent-200 flex items-center justify-center">
+                    <User className="w-24 h-24 text-medical-primary-900/20" />
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-6">
+                    <h3 className="text-lg font-medium text-medical-primary-900 mb-1">
                       {locale === 'ua' ? doctor.name.ua : doctor.name.en}
                     </h3>
-                    <p className="text-medical-accent-600 mb-3">
+                    <p className="text-medical-text-secondary text-sm mb-4">
                       {locale === 'ua' ? doctor.specialty.ua : doctor.specialty.en}
                     </p>
-                    <div className="flex items-center justify-center gap-2 text-medical-text-tertiary">
-                      <Award className="w-4 h-4" />
-                      <span>{doctor.experience} {locale === 'ua' ? 'років досвіду' : 'years experience'}</span>
+
+                    {/* Stats */}
+                    <div className="flex items-center gap-4 mb-4 text-sm text-medical-text-secondary">
+                      <div className="flex items-center gap-1">
+                        <Award className="w-4 h-4 text-medical-accent-600" />
+                        <span>
+                          {doctor.experience} {locale === 'ua' ? 'років' : 'years'}
+                        </span>
+                      </div>
                     </div>
-                  </Card>
+
+                    {/* Actions */}
+                    <div className="flex gap-2">
+                      <Button variant="outline" className="flex-1">
+                        {locale === 'ua' ? 'Переглянути' : 'View Profile'}
+                      </Button>
+                      <Button className="flex-1">
+                        {locale === 'ua' ? 'Записатись' : 'Book'}
+                      </Button>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -448,14 +470,18 @@ export default function WayPage() {
                     onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-white/40 focus:ring-white/20"
                   />
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full bg-white text-medical-primary-900 hover:bg-white/90"
-                  >
-                    <Send className="w-4 h-4 mr-2" />
-                    {locale === 'ua' ? 'Надіслати заявку' : 'Send request'}
-                  </Button>
+                  <div className="flex justify-center">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="bg-white text-medical-primary-900 hover:bg-white/90 justify-center"
+                    >
+                      <div className="flex items-center">
+                        <Send className="w-4 h-4 mr-2" />
+                        <span>{locale === 'ua' ? 'Надіслати заявку' : 'Send request'}</span>
+                      </div>
+                    </Button>
+                  </div>
                 </form>
               ) : (
                 <motion.div
