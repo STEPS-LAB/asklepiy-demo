@@ -57,7 +57,7 @@ export function Header() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
+            <Link href="/" className="group">
               <motion.div
                 className="relative w-14 h-14"
                 whileHover={{ scale: 1.05 }}
@@ -69,19 +69,6 @@ export function Header() {
                   fill
                   className="object-contain"
                 />
-              </motion.div>
-              <motion.div
-                className="hidden sm:block"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <span className="block text-medical-primary-900 font-secondary font-medium text-lg leading-tight">
-                  {locale === 'ua' ? 'Асклепій' : 'Asklepiy'}
-                </span>
-                <span className="block text-medical-text-tertiary text-xs tracking-wide">
-                  {locale === 'ua' ? 'Клініка' : 'Clinic'}
-                </span>
               </motion.div>
             </Link>
 
