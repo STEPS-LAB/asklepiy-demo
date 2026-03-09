@@ -49,7 +49,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                   {locale === 'ua' ? 'Асклепій' : 'Asklepiy'}
                 </span>
                 <span className="block text-medical-text-tertiary text-sm">
-                  {locale === 'ua' ? 'Клініка' : 'Clinic'}
+                  {locale === 'ua' ? 'Медичний центр' : 'Medical Center'}
                 </span>
               </div>
               <button

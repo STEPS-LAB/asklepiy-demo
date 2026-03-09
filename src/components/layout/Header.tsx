@@ -128,7 +128,16 @@ export function Header() {
             </motion.nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
+              {/* Language Switcher */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <LanguageSwitcher />
+              </motion.div>
+
               {/* Search - Desktop */}
               <motion.button
                 className="hidden md:flex p-2.5 text-medical-text-secondary hover:text-medical-primary-900 hover:bg-medical-surface-100 rounded-sm transition-all"
@@ -138,15 +147,6 @@ export function Header() {
               >
                 <Search className="w-5 h-5" />
               </motion.button>
-
-              {/* Language Switcher */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                <LanguageSwitcher />
-              </motion.div>
 
               {/* Phone Dropdown - Desktop */}
               <div ref={phoneDropdownRef} className="relative hidden md:block">
@@ -273,8 +273,10 @@ export function Header() {
               >
                 <Link href="/dashboard">
                   <Button variant="primary" size="sm" className="hidden sm:inline-flex shadow-medical-md">
-                    <User className="w-4 h-4 mr-2" />
-                    {locale === 'ua' ? 'Кабінет' : 'Dashboard'}
+                    <div className="flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      <span>{locale === 'ua' ? 'Кабінет' : 'Dashboard'}</span>
+                    </div>
                   </Button>
                 </Link>
               </motion.div>

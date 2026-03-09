@@ -73,7 +73,7 @@ export function TrustSection() {
             </h2>
             <p className="text-medical-text-secondary text-lg mb-6 leading-relaxed">
               {locale === 'ua'
-                ? 'Клініка "Асклепій" — це сучасний багатопрофільний медичний центр, який надає повний спектр медичних послуг. Ми поєднуємо передові технології діагностики та лікування з індивідуальним підходом до кожного пацієнта.'
+                ? 'Медичний центр "Асклепій" — це сучасний багатопрофільний заклад, який надає повний спектр медичних послуг. Ми поєднуємо передові технології діагностики та лікування з індивідуальним підходом до кожного пацієнта.'
                 : 'Asklepiy Clinic is a modern multidisciplinary medical center providing a full range of medical services. We combine advanced diagnostic and treatment technologies with an individual approach to each patient.'}
             </p>
             <p className="text-medical-text-secondary mb-8 leading-relaxed">

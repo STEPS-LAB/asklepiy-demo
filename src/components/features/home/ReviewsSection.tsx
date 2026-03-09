@@ -12,7 +12,7 @@ const reviews = [
     doctor: { ua: 'Коваленко О.В.', en: 'Kovalenko O.V.' },
     rating: 5,
     text: {
-      ua: 'Дуже вдячна лікарю за професіоналізм та уважне ставлення. Консультація пройшла на найвищому рівні. Клініка сучасна, чиста, персонал привітний.',
+      ua: 'Дуже вдячна лікарю за професіоналізм та уважне ставлення. Консультація пройшла на найвищому рівні. Медичний центр сучасний, чистий, персонал привітний.',
       en: 'Very grateful to the doctor for professionalism and attentive care. The consultation was at the highest level. The clinic is modern, clean, and the staff is friendly.',
     },
   },

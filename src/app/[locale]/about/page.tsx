@@ -35,7 +35,7 @@ export default function AboutPage() {
         </h1>
         <p className="text-lg text-medical-text-secondary max-w-3xl mx-auto">
           {locale === 'ua'
-            ? 'Провідна приватна клініка України з сучасним обладнанням та кваліфікованими лікарями'
+            ? 'Провідний приватний медичний центр України з сучасним обладнанням та кваліфікованими лікарями'
             : "Ukraine's leading private clinic with modern equipment and qualified doctors"}
         </p>
       </motion.div>

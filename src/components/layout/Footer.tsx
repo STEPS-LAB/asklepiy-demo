@@ -59,13 +59,13 @@ export function Footer() {
                   {locale === 'ua' ? 'Асклепій' : 'Asklepiy'}
                 </span>
                 <span className="block text-medical-surface-300 text-sm tracking-wide">
-                  {locale === 'ua' ? 'Клініка' : 'Clinic'}
+                  {locale === 'ua' ? 'Медичний центр' : 'Medical Center'}
                 </span>
               </div>
             </Link>
             <p className="text-medical-surface-300 mb-6 max-w-sm font-light leading-relaxed">
               {locale === 'ua'
-                ? 'Провідна приватна клініка України з сучасним обладнанням та кваліфікованими лікарями.'
+                ? 'Провідний приватний медичний центр України з сучасним обладнанням та кваліфікованими лікарями.'
                 : "Ukraine's leading private clinic with modern equipment and qualified doctors."}
             </p>
 
@@ -116,7 +116,7 @@ export function Footer() {
           {/* Clinic */}
           <motion.div variants={fadeInUpVariants}>
             <h3 className="font-secondary font-medium text-lg mb-5">
-              {locale === 'ua' ? 'Клініка' : 'Clinic'}
+              {locale === 'ua' ? 'Медичний центр' : 'Medical Center'}
             </h3>
             <ul className="space-y-3">
               {footerLinks.clinic.map((link, index) => (

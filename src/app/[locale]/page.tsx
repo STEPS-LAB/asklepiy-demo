@@ -155,7 +155,7 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                {locale === 'ua' ? 'Провідна клініка України' : 'Leading clinic of Ukraine'}
+                {locale === 'ua' ? 'Провідний медичний центр України' : 'Leading medical center of Ukraine'}
               </motion.span>
               
               <motion.h1
@@ -176,7 +176,7 @@ export default function HomePage() {
                 transition={{ delay: 0.4 }}
               >
                 {locale === 'ua'
-                  ? 'Провідна приватна клініка України з інноваційними підходами до лікування та діагностики'
+                  ? 'Провідний приватний медичний центр України з інноваційними підходами до лікування та діагностики'
                   : "Ukraine's leading private clinic with innovative approaches to treatment and diagnostics"}
               </motion.p>
               
