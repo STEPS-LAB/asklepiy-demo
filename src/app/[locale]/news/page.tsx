@@ -109,8 +109,10 @@ export default function NewsPage() {
                   {locale === 'ua' ? item.excerpt : item.excerptEn}
                 </p>
                 <Button variant="ghost" className="p-0 h-auto group-hover:gap-2 transition-all">
-                  {locale === 'ua' ? 'Читати далі' : 'Read more'}
-                  <ArrowRight className="w-4 h-4 ml-1" />
+                  <span className="flex items-center">
+                    {locale === 'ua' ? 'Читати далі' : 'Read more'}
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </span>
                 </Button>
               </div>
             </Card>
