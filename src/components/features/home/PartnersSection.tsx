@@ -5,12 +5,12 @@ import { motion } from 'framer-motion';
 import { Building2 } from 'lucide-react';
 
 const partners = [
-  { id: 1, name: 'НСЗУ', nameEn: 'NSZU' },
-  { id: 2, name: 'Євролабораторія', nameEn: 'Eurolab' },
-  { id: 3, name: 'Сінево', nameEn: 'Synevo' },
-  { id: 4, name: 'Медікал', nameEn: 'Medical' },
-  { id: 5, name: 'Здоров\'я', nameEn: 'Health' },
-  { id: 6, name: 'Фармацевт', nameEn: 'Pharmacist' },
+  { id: 1, name: 'Полісся', nameEn: 'Polissia' },
+  { id: 2, name: 'TRX Pantera Club', nameEn: 'TRX Pantera Club' },
+  { id: 3, name: 'Атмосфера', nameEn: 'Atmosfera' },
+  { id: 4, name: 'Vuso', nameEn: 'Vuso' },
+  { id: 5, name: 'Savitar Group', nameEn: 'Savitar Group' },
+  { id: 6, name: 'CSD Lab', nameEn: 'CSD Lab' },
 ];
 
 export function PartnersSection() {

@@ -18,10 +18,6 @@ const footerLinks = {
     { href: '/news', label: 'Новини', labelEn: 'News' },
     { href: '/declaration', label: 'Декларація', labelEn: 'Declaration' },
   ],
-  legal: [
-    { href: '/privacy', label: 'Політика конфіденційності', labelEn: 'Privacy Policy' },
-    { href: '/terms', label: 'Умови використання', labelEn: 'Terms of Service' },
-  ],
 };
 
 const socialLinks = [
@@ -219,16 +215,31 @@ export function Footer() {
                 ? `© ${currentYear} Асклепій Клінік. Всі права захищено.`
                 : `© ${currentYear} Asklepiy Clinic. All rights reserved.`}
             </p>
+            <p className="text-medical-surface-400 text-sm font-light">
+              {locale === 'ua'
+                ? 'Розроблено '
+                : 'Developed by '}
+              <a
+                href="https://stepslab.vercel.app"
+                className="hover:text-white transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                STEPS LAB
+              </a>
+              {' x Asklepiy Concept'}
+            </p>
             <div className="flex items-center gap-6">
-              {footerLinks.legal.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-medical-surface-400 hover:text-white text-sm font-light transition-colors"
-                >
-                  {locale === 'ua' ? link.label : link.labelEn}
-                </Link>
-              ))}
+              <span className="text-medical-surface-400 text-sm font-light">
+                {locale === 'ua'
+                  ? 'Політика конфіденційності'
+                  : 'Privacy Policy'}
+              </span>
+              <span className="text-medical-surface-400 text-sm font-light">
+                {locale === 'ua'
+                  ? 'Умови використання'
+                  : 'Terms of Service'}
+              </span>
             </div>
           </div>
         </motion.div>
