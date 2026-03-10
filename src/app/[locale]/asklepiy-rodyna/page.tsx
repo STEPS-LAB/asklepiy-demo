@@ -144,7 +144,7 @@ export default function AsklepiyRodynaPage() {
               </Link>
               <a href="https://t.me/asklepiy_rodyna" target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="lg" leftIcon={<img src="/images/tg-logo.svg" alt="Telegram" className="w-5 h-5" />}>
-                  Telegram-канал сімейної медицини
+                  {locale === 'ua' ? 'Telegram-канал сімейної медицини' : 'Family Medicine Telegram Channel'}
                 </Button>
               </a>
             </div>

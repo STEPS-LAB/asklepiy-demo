@@ -105,15 +105,9 @@ export default function NewsPage() {
                 <h3 className="text-lg font-medium text-medical-primary-900 mb-2 group-hover:text-medical-accent-600 transition-colors">
                   {locale === 'ua' ? item.title : item.titleEn}
                 </h3>
-                <p className="text-medical-text-secondary mb-4">
+                <p className="text-medical-text-secondary">
                   {locale === 'ua' ? item.excerpt : item.excerptEn}
                 </p>
-                <Button variant="ghost" className="p-0 h-auto group-hover:gap-2 transition-all">
-                  <span className="flex items-center">
-                    {locale === 'ua' ? 'Читати далі' : 'Read more'}
-                    <ArrowRight className="w-4 h-4 ml-1" />
-                  </span>
-                </Button>
               </div>
             </Card>
           </motion.div>
