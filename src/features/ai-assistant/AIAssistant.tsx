@@ -247,7 +247,7 @@ export function AIAssistant() {
     <>
       {/* Floating Button */}
       <motion.div
-        className={cn('fixed bottom-6 right-6 z-toast', isModalOpen && 'hidden')}
+        className={cn('fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-toast', isModalOpen && 'hidden')}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1, type: 'spring', stiffness: 400, damping: 20 }}
@@ -300,7 +300,7 @@ export function AIAssistant() {
         {isOpen && (
           <motion.div
             ref={chatWindowRef}
-            className="fixed bottom-24 right-6 w-full max-w-md z-toast"
+            className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 w-[calc(100vw-2rem)] sm:w-full max-w-md z-toast"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
