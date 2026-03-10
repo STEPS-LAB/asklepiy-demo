@@ -5,19 +5,18 @@ import {locales, defaultLocale} from './src/i18n';
 export {locales, defaultLocale};
 
 export default getRequestConfig(async ({requestLocale}) => {
-  // This typically comes from the URL or middleware
+  // Start with the locale from the URL (via next-intl middleware)
   let resolvedLocale = await requestLocale;
 
-  // If no locale from URL, try to get from cookie
-  if (!resolvedLocale || !locales.includes(resolvedLocale as typeof locales[number])) {
-    const cookieStore = await cookies();
-    const cookieLocale = cookieStore.get('locale')?.value;
+  // Check cookie for user's saved preference
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get('locale')?.value;
 
-    if (cookieLocale && locales.includes(cookieLocale as typeof locales[number])) {
-      resolvedLocale = cookieLocale;
-    } else {
-      resolvedLocale = defaultLocale;
-    }
+  // Use cookie locale if it's valid, otherwise fall back to URL locale or default
+  if (cookieLocale && locales.includes(cookieLocale as typeof locales[number])) {
+    resolvedLocale = cookieLocale;
+  } else if (!resolvedLocale || !locales.includes(resolvedLocale as typeof locales[number])) {
+    resolvedLocale = defaultLocale;
   }
 
   return {

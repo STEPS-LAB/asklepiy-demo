@@ -17,19 +17,21 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
+  const { locale: urlLocale } = await params;
 
   // Validate that the incoming `locale` parameter is valid
-  if (!['ua', 'en'].includes(locale)) {
+  if (!['ua', 'en'].includes(urlLocale)) {
     notFound();
   }
 
+  // Use getLocale which respects our i18n config (cookie > URL > default)
+  const locale = await getLocale() as 'ua' | 'en';
   const messages = await getMessages();
 
   return (
     <NextIntlClientProvider messages={messages}>
       <ReactQueryProvider>
-        <LocaleProvider initialLocale={locale as 'ua' | 'en'}>
+        <LocaleProvider initialLocale={locale}>
           <AuthProvider>
             <UIProvider>
               <div className="min-h-screen flex flex-col overflow-x-hidden">

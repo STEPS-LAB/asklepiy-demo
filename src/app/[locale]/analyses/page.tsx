@@ -4,7 +4,7 @@ import { useLocale } from '@/contexts';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { Card, Button, Input } from '@/components/ui';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { BookingModal } from '@/features/booking/BookingModal';
 
@@ -681,6 +681,46 @@ export default function ServicesPage() {
     price: number;
   }>({ isOpen: false, serviceName: '', serviceNameEn: '', price: 0 });
 
+  // Search results - filter services based on query
+  const searchResults = useMemo(() => {
+    if (searchQuery.length < 2) return [];
+
+    const query = searchQuery.toLowerCase();
+    const results: Array<{
+      sectionId: string;
+      sectionName: string;
+      categoryId: string;
+      categoryName: string;
+      serviceName: string;
+      serviceNameEn: string;
+      price: number;
+    }> = [];
+
+    Object.entries(pricingData).forEach(([sectionId, categories]) => {
+      Object.entries(categories).forEach(([categoryId, services]) => {
+        services.forEach((service) => {
+          const nameUa = service.name.toLowerCase();
+          const nameEn = service.nameEn.toLowerCase();
+          
+          if (nameUa.includes(query) || nameEn.includes(query)) {
+            const section = serviceSections.find(s => s.id === sectionId);
+            results.push({
+              sectionId,
+              sectionName: locale === 'ua' ? section?.name || '' : section?.nameEn || '',
+              categoryId,
+              categoryName: categoryNames[categoryId]?.[locale === 'ua' ? 'ua' : 'en'] || categoryId,
+              serviceName: service.name,
+              serviceNameEn: service.nameEn,
+              price: service.price,
+            });
+          }
+        });
+      });
+    });
+
+    return results;
+  }, [searchQuery, locale]);
+
   const toggleSection = (sectionId: string) => {
     if (expandedSection === sectionId) {
       setExpandedSection(null);
@@ -811,6 +851,51 @@ export default function ServicesPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
+        
+        {/* Search Results */}
+        {searchQuery.length >= 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute top-full left-0 right-0 mt-2 bg-white rounded-sm shadow-medical-lg border border-medical-surface-200 max-h-96 overflow-y-auto z-10"
+          >
+            {searchResults.length > 0 ? (
+              <div className="divide-y divide-medical-surface-100">
+                {searchResults.slice(0, 10).map((result, idx) => (
+                  <button
+                    key={`${result.sectionId}-${result.categoryId}-${idx}`}
+                    className="w-full px-4 py-3 text-left hover:bg-medical-surface-50 transition-colors"
+                    onClick={() => {
+                      setExpandedSection(result.sectionId);
+                      setSelectedCategory(result.categoryId);
+                      setSearchQuery('');
+                    }}
+                  >
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="flex-1">
+                        <p className="text-medical-primary-900 font-medium">
+                          {locale === 'ua' ? result.serviceName : result.serviceNameEn}
+                        </p>
+                        <p className="text-sm text-medical-text-tertiary mt-0.5">
+                          {result.categoryName} • {result.sectionName}
+                        </p>
+                      </div>
+                      <span className="font-medium text-medical-accent-600 whitespace-nowrap">
+                        {result.price.toLocaleString('ua-UA')} ₴
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="p-4 text-center text-medical-text-tertiary">
+                {locale === 'ua'
+                  ? 'Нічого не знайдено'
+                  : 'Nothing found'}
+              </div>
+            )}
+          </motion.div>
+        )}
       </div>
 
       {/* Service Sections */}
