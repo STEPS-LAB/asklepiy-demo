@@ -62,119 +62,161 @@ const doctors = [
   { id: '10', name: 'Д-р Ткаченко О.В.', nameEn: 'Dr. Tkachenko O.V.', specialty: 'Дерматовенеролог', specialtyEn: 'Dermatovenereologist' },
 ];
 
+// Category names with translations
+const categoryNames: Record<string, { ua: string; en: string }> = {
+  // adult-polyclinic
+  'orthopedics': { ua: 'Ортопедія і травматологія', en: 'Orthopedics and Traumatology' },
+  'urology': { ua: 'Урологія', en: 'Urology' },
+  'hematology': { ua: 'Гематологія', en: 'Hematology' },
+  'massage-adults': { ua: 'Масаж для дорослих', en: 'Massage for Adults' },
+  'dermatovenereology': { ua: 'Дерматовенерологія', en: 'Dermatovenereology' },
+  'cardiology': { ua: 'Кардіологія', en: 'Cardiology' },
+  'neurology': { ua: 'Неврологія', en: 'Neurology' },
+  'endocrinology': { ua: 'Ендокринологія', en: 'Endocrinology' },
+  'ent': { ua: 'Отоларингологія (ЛОР)', en: 'Otolaryngology (ENT)' },
+  'rheumatology': { ua: 'Ревматологія', en: 'Rheumatology' },
+  'proctology': { ua: 'Проктологія', en: 'Proctology' },
+  // pediatric-clinic
+  'vaccinations': { ua: 'Щеплення дітей', en: 'Children Vaccinations' },
+  'hematology-pediatric': { ua: 'Гематологія дитяча', en: 'Pediatric Hematology' },
+  'allergology-pediatric': { ua: 'Алергологія дитяча', en: 'Pediatric Allergology' },
+  'surgery-urology-pediatric': { ua: 'Хірургія та урологія дитяча', en: 'Pediatric Surgery and Urology' },
+  'nephrology-pediatric': { ua: 'Нефрологія дитяча', en: 'Pediatric Nephrology' },
+  'pediatrics': { ua: 'Педіатрія', en: 'Pediatrics' },
+  'ent-pediatric': { ua: 'Отоларингологія дитяча', en: 'Pediatric Otolaryngology' },
+  'neurology-pediatric': { ua: 'Неврологія дитяча', en: 'Pediatric Neurology' },
+  // pediatric-procedures
+  'gynecology-pediatric': { ua: 'Гінекологічні дитячі процедури та маніпуляції', en: 'Pediatric Gynecological Procedures' },
+  'ophthalmology-pediatric': { ua: 'Офтальмологічні дитячі процедури та маніпуляції', en: 'Pediatric Ophthalmologic Procedures' },
+  'ent-pediatric-procedures': { ua: 'Отоларингологічні дитячі процедури та маніпуляції', en: 'Pediatric ENT Procedures' },
+  'orthopedics-pediatric': { ua: 'Ортопедичні дитячі процедури та маніпуляції', en: 'Pediatric Orthopedic Procedures' },
+  // diagnostics
+  'ultrasound': { ua: 'УЗД', en: 'Ultrasound Diagnostics' },
+  'functional-diagnostics': { ua: 'Функціональна діагностика', en: 'Functional Diagnostics' },
+  'respiratory-diagnostics': { ua: 'Діагностика дихання', en: 'Respiratory Diagnostics' },
+  // laboratory
+  'pcr': { ua: 'ПЛР діагностика', en: 'PCR Diagnostics' },
+  'hepatitis': { ua: 'Вірусні гепатити', en: 'Viral Hepatitis' },
+  'biochemical': { ua: 'Біохімічні аналізи', en: 'Biochemical Analysis' },
+  // surgery
+  'ophthalmic-surgery': { ua: 'Офтальмохірургія', en: 'Ophthalmic Surgery' },
+  'urological-surgery': { ua: 'Урологічна хірургія', en: 'Urological Surgery' },
+  'ent-surgery': { ua: 'ЛОР хірургія', en: 'ENT Surgery' },
+};
+
 // Pricing data with Section → Category → Services structure
 const pricingData: Record<string, Record<string, { name: string; nameEn: string; price: number }[]>> = {
   'adult-polyclinic': {
-    'Ортопедія і травматологія': [
+    'orthopedics': [
       { name: 'Консультація ортопеда-травматолога', nameEn: 'Orthopedic-traumatologist consultation', price: 650 },
       { name: 'Консультація ортопеда-травматолога (професор, д.м.н.)', nameEn: 'Orthopedic-traumatologist consultation (Professor, Doctor of Medical Sciences)', price: 950 },
       { name: 'Повторна консультація ортопеда-травматолога', nameEn: 'Orthopedic-traumatologist follow-up consultation', price: 550 },
       { name: 'Онлайн консультація ортопеда-травматолога', nameEn: 'Online orthopedic-traumatologist consultation', price: 650 },
     ],
-    'Урологія': [
+    'urology': [
       { name: 'Консультація уролога', nameEn: 'Urologist consultation', price: 650 },
       { name: 'Повторна консультація уролога', nameEn: 'Urologist follow-up consultation', price: 550 },
     ],
-    'Гематологія': [
+    'hematology': [
       { name: 'Консультація гематолога', nameEn: 'Hematologist consultation', price: 750 },
       { name: 'Повторна консультація гематолога', nameEn: 'Hematologist follow-up consultation', price: 650 },
     ],
-    'Масаж для дорослих': [
+    'massage-adults': [
       { name: 'Лімфодренажний лікувальний масаж', nameEn: 'Lymphatic drainage therapeutic massage', price: 700 },
       { name: 'Загальний лікувальний масаж всього тіла', nameEn: 'Full body therapeutic massage', price: 800 },
       { name: 'Лікувальний масаж спини', nameEn: 'Back therapeutic massage', price: 500 },
       { name: 'Масаж комірової зони', nameEn: 'Neck and collar zone massage', price: 400 },
     ],
-    'Дерматовенерологія': [
+    'dermatovenereology': [
       { name: 'Консультація дерматовенеролога', nameEn: 'Dermatovenereologist consultation', price: 650 },
     ],
-    'Кардіологія': [
+    'cardiology': [
       { name: 'Консультація кардіолога', nameEn: 'Cardiologist consultation', price: 700 },
       { name: 'Повторна консультація кардіолога', nameEn: 'Cardiologist follow-up consultation', price: 600 },
       { name: 'Онлайн консультація кардіолога', nameEn: 'Online cardiologist consultation', price: 700 },
     ],
-    'Неврологія': [
+    'neurology': [
       { name: 'Консультація невролога', nameEn: 'Neurologist consultation', price: 650 },
       { name: 'Повторна консультація невролога', nameEn: 'Neurologist follow-up consultation', price: 550 },
       { name: 'Консультація невролога (спеціаліст)', nameEn: 'Neurologist consultation (specialist category)', price: 700 },
       { name: 'Онлайн консультація невролога', nameEn: 'Online neurologist consultation', price: 650 },
     ],
-    'Ендокринологія': [
+    'endocrinology': [
       { name: 'Консультація ендокринолога', nameEn: 'Endocrinologist consultation', price: 650 },
       { name: 'Повторна консультація ендокринолога', nameEn: 'Endocrinologist follow-up consultation', price: 550 },
       { name: 'Онлайн консультація ендокринолога', nameEn: 'Online endocrinologist consultation', price: 650 },
     ],
-    'Отоларингологія (ЛОР)': [
+    'ent': [
       { name: 'Консультація ЛОРа', nameEn: 'ENT consultation', price: 650 },
       { name: 'Повторна консультація ЛОРа', nameEn: 'ENT follow-up consultation', price: 550 },
       { name: 'Онлайн консультація ЛОРа', nameEn: 'Online ENT consultation', price: 650 },
       { name: 'Консультація ЛОРа (лікар спеціаліст)', nameEn: 'ENT consultation (specialist doctor)', price: 700 },
     ],
-    'Ревматологія': [
+    'rheumatology': [
       { name: 'Консультація ревматолога', nameEn: 'Rheumatologist consultation', price: 750 },
       { name: 'Онлайн консультація ревматолога', nameEn: 'Online rheumatologist consultation', price: 750 },
       { name: 'Повторна консультація ревматолога', nameEn: 'Rheumatologist follow-up consultation', price: 650 },
     ],
-    'Проктологія': [
+    'proctology': [
       { name: 'Консультація проктолога', nameEn: 'Proctologist consultation', price: 750 },
       { name: 'Повторна консультація проктолога', nameEn: 'Proctologist follow-up consultation', price: 650 },
     ],
   },
   'pediatric-clinic': {
-    'Щеплення дітей': [
+    'vaccinations': [
       { name: '«Туберкулін», проведення діагностичної проби на туберкульоз дітей віком від 4 до 18 років', nameEn: 'Tuberculin skin test for children aged 4-18', price: 250 },
       { name: 'Вакцинація від менінгококової інфекції дітей від 9 місяців препаратом «Менактра»', nameEn: 'Meningococcal vaccination for children from 9 months with Menactra', price: 1850 },
       { name: 'Консультація педіатра перед вакцинацією', nameEn: 'Pediatrician consultation before vaccination', price: 2250 },
       { name: '«Церварикс», вакцинація проти раку шийки матки дітей від 9 років', nameEn: 'Cervarix vaccination against cervical cancer for children from 9 years', price: 2700 },
       { name: 'Вакцинація дитини проти грипу «Джісі Флю Квадривалент»', nameEn: 'Influenza vaccination with GC Flu Quadrivalent', price: 750 },
     ],
-    'Гематологія дитяча': [
+    'hematology-pediatric': [
       { name: 'Консультація дитячого гематолога', nameEn: 'Pediatric hematologist consultation', price: 600 },
       { name: 'Консультація дитячого гематолога в динаміці', nameEn: 'Pediatric hematologist follow-up consultation', price: 450 },
     ],
-    'Алергологія дитяча': [
+    'allergology-pediatric': [
       { name: 'Консультація дитячого алерголога', nameEn: 'Pediatric allergist consultation', price: 600 },
       { name: 'Консультація дитячого алерголога в динаміці', nameEn: 'Pediatric allergist follow-up consultation', price: 450 },
     ],
-    'Хірургія та урологія дитяча': [
+    'surgery-urology-pediatric': [
       { name: 'Консультація дитячого хірурга', nameEn: 'Pediatric surgeon consultation', price: 600 },
       { name: 'Консультація дитячого хірурга в динаміці', nameEn: 'Pediatric surgeon follow-up consultation', price: 450 },
       { name: 'Консультація дитячого уролога', nameEn: 'Pediatric urologist consultation', price: 600 },
       { name: 'Консультація дитячого уролога в динаміці', nameEn: 'Pediatric urologist follow-up consultation', price: 450 },
     ],
-    'Нефрологія дитяча': [
+    'nephrology-pediatric': [
       { name: 'Консультація дитячого нефролога', nameEn: 'Pediatric nephrologist consultation', price: 600 },
       { name: 'Консультація дитячого нефролога в динаміці', nameEn: 'Pediatric nephrologist follow-up consultation', price: 450 },
     ],
-    'Педіатрія': [
+    'pediatrics': [
       { name: 'Консультація педіатра з грудного вигодовування', nameEn: 'Pediatrician consultation on breastfeeding', price: 1000 },
       { name: 'Консультація педіатра', nameEn: 'Pediatrician consultation', price: 600 },
       { name: 'Консультація педіатра в динаміці', nameEn: 'Pediatrician follow-up consultation', price: 450 },
       { name: 'Консультація педіатра онлайн', nameEn: 'Online pediatrician consultation', price: 600 },
       { name: 'Консультація педіатра по декларації', nameEn: 'Pediatrician consultation by declaration', price: 0 },
     ],
-    'Отоларингологія дитяча': [
+    'ent-pediatric': [
       { name: 'Консультація дитячого отоларинголога (ЛОР)', nameEn: 'Pediatric ENT consultation', price: 650 },
       { name: 'Консультація дитячого отоларинголога в динаміці', nameEn: 'Pediatric ENT follow-up consultation', price: 500 },
       { name: 'Консультація дитячого отоларинголога онлайн', nameEn: 'Online pediatric ENT consultation', price: 650 },
     ],
-    'Неврологія дитяча': [
+    'neurology-pediatric': [
       { name: 'Консультація дитячого невролога', nameEn: 'Pediatric neurologist consultation', price: 600 },
       { name: 'Консультація дитячого невролога в динаміці', nameEn: 'Pediatric neurologist follow-up consultation', price: 450 },
       { name: 'Консультація дитячого невролога онлайн', nameEn: 'Online pediatric neurologist consultation', price: 600 },
     ],
   },
   'pediatric-procedures': {
-    'Гінекологічні дитячі процедури та маніпуляції': [
+    'gynecology-pediatric': [
       { name: 'Інстиляція піхви у дитини', nameEn: 'Vaginal instillation in a child', price: 400 },
     ],
-    'Офтальмологічні дитячі процедури та маніпуляції': [
+    'ophthalmology-pediatric': [
       { name: 'Огляд очного дна (непряма офтальмоскопія) у дитини', nameEn: 'Fundus examination (indirect ophthalmoscopy) in a child', price: 200 },
       { name: 'Підбір окулярів дитині', nameEn: 'Eyeglass selection for a child', price: 300 },
       { name: 'Підбір окулярів дитині (складна рецептура)', nameEn: 'Eyeglass selection for a child (complex prescription)', price: 3000 },
       { name: 'Курс апаратного лікування №8 (спазм акомодації)', nameEn: 'Hardware treatment course No. 8 (accommodation spasm)', price: 2500 },
     ],
-    'Отоларингологічні дитячі процедури та маніпуляції': [
+    'ent-pediatric-procedures': [
       { name: 'Введення лікарських засобів у слизову носових раковин або гортань у дитини', nameEn: 'Administration of drugs to the nasal turbinates or larynx mucosa in a child', price: 500 },
       { name: 'Продування слухових труб за Політцеру у дитини', nameEn: 'Politzerization (ear blowing) in a child', price: 550 },
       { name: 'Промивання лакун мигдалик у дитини', nameEn: 'Washing of tonsil lacunae in a child', price: 550 },
@@ -183,7 +225,7 @@ const pricingData: Record<string, Record<string, { name: string; nameEn: string;
       { name: 'Припікання слизової оболонки носової порожнини у дитини', nameEn: 'Cauterization of the nasal mucosa in a child', price: 600 },
       { name: 'Ендоскопія ЛОР органів у дитини', nameEn: 'Endoscopy of ENT organs in a child', price: 900 },
     ],
-    'Ортопедичні дитячі процедури та маніпуляції': [
+    'orthopedics-pediatric': [
       { name: 'Пункція суглоба у дитини', nameEn: 'Joint puncture in a child', price: 800 },
       { name: 'Внутрішньосуглобове введення ліків у дитини', nameEn: 'Intra-articular drug administration in a child', price: 600 },
       { name: 'Парафінова терапія для дитини', nameEn: 'Paraffin therapy for a child', price: 400 },
@@ -191,49 +233,49 @@ const pricingData: Record<string, Record<string, { name: string; nameEn: string;
     ],
   },
   'diagnostics': {
-    'УЗД': [
+    'ultrasound': [
       { name: 'УЗД органів черевної порожнини', nameEn: 'Abdominal ultrasound', price: 650 },
       { name: 'УЗД нирок', nameEn: 'Kidney ultrasound', price: 550 },
       { name: 'УЗД сечового міхура', nameEn: 'Bladder ultrasound', price: 450 },
       { name: 'УЗД щитоподібної залози', nameEn: 'Thyroid ultrasound', price: 650 },
     ],
-    'Функціональна діагностика': [
+    'functional-diagnostics': [
       { name: 'Електрокардіографія (ЕКГ)', nameEn: 'Electrocardiography (ECG)', price: 250 },
     ],
-    'Діагностика дихання': [
+    'respiratory-diagnostics': [
       { name: 'Бронхоспірометрія', nameEn: 'Bronchospyrometry', price: 400 },
       { name: 'Бронхоспірометрія з бронхолітиком', nameEn: 'Bronchospyrometry with bronchodilator', price: 500 },
     ],
   },
   'laboratory': {
-    'ПЛР діагностика': [
+    'pcr': [
       { name: 'Вірус Епштейна-Барр ПЛР', nameEn: 'Epstein–Barr virus PCR', price: 500 },
       { name: 'Вірус герпесу ПЛР', nameEn: 'Herpes virus PCR', price: 450 },
       { name: 'Вірус папіломи людини ПЛР', nameEn: 'Human papillomavirus PCR', price: 550 },
     ],
-    'Вірусні гепатити': [
+    'hepatitis': [
       { name: 'Тест на гепатит A', nameEn: 'Hepatitis A test', price: 350 },
       { name: 'Тест на гепатит B', nameEn: 'Hepatitis B test', price: 400 },
       { name: 'Тест на гепатит C', nameEn: 'Hepatitis C test', price: 400 },
     ],
-    'Біохімічні аналізи': [
+    'biochemical': [
       { name: 'Тригліцериди', nameEn: 'Triglycerides', price: 150 },
       { name: 'Сечова кислота', nameEn: 'Uric acid', price: 150 },
       { name: 'D-димер', nameEn: 'D-dimer', price: 450 },
     ],
   },
   'surgery': {
-    'Офтальмохірургія': [
+    'ophthalmic-surgery': [
       { name: 'Факоемульсифікація катаракти', nameEn: 'Cataract phacoemulsification', price: 18000 },
       { name: 'Кантопексія', nameEn: 'Canthopexy', price: 7000 },
       { name: 'Видалення птеригіуму', nameEn: 'Pterygium removal', price: 5000 },
     ],
-    'Урологічна хірургія': [
+    'urological-surgery': [
       { name: 'Стентування сечоводу', nameEn: 'Ureteral stenting', price: 6500 },
       { name: 'ТУР операція простати', nameEn: 'TUR prostate surgery', price: 25000 },
       { name: 'Операція з приводу варикоцеле', nameEn: 'Varicocele surgery', price: 12000 },
     ],
-    'ЛОР хірургія': [
+    'ent-surgery': [
       { name: 'Септопластика', nameEn: 'Septoplasty', price: 20000 },
       { name: 'Ринопластика', nameEn: 'Rhinoplasty', price: 35000 },
       { name: 'Ендоскопічна операція на пазухах', nameEn: 'Endoscopic sinus surgery', price: 25000 },
@@ -829,7 +871,7 @@ export default function ServicesPage() {
                                 : 'bg-medical-surface-50 text-medical-text-primary hover:bg-medical-surface-100'
                             )}
                           >
-                            {category}
+                            {categoryNames[category] ? (locale === 'ua' ? categoryNames[category].ua : categoryNames[category].en) : category}
                           </button>
                         ))}
                       </div>

@@ -345,7 +345,7 @@ export function AIAssistant() {
               {!isMinimized && (
                 <>
                   {/* Messages */}
-                  <div className="h-80 overflow-y-auto p-4 space-y-4 bg-medical-surface-50/50">
+                  <div className="h-80 overflow-y-auto p-4 space-y-6 bg-medical-surface-50/50">
                     {isLoading ? (
                       <AIAssistantSkeleton />
                     ) : (
@@ -357,7 +357,7 @@ export function AIAssistant() {
                         {messages.map((message, index) => (
                           <motion.div
                             key={message.id}
-                            className={cn('flex', message.role === 'user' ? 'justify-end' : 'justify-start')}
+                            className={cn('flex mb-6', message.role === 'user' ? 'justify-end' : 'justify-start', 'last:mb-0')}
                             variants={staggerItemVariants}
                             custom={index}
                           >
