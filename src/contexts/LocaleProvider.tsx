@@ -19,13 +19,16 @@ export function LocaleProvider({ children, initialLocale }: { children: React.Re
   const setLocale = useCallback((newLocale: Locale) => {
     // Save to localStorage for client-side persistence
     localStorage.setItem('locale', newLocale);
-    // Save to cookie for middleware to use on navigation
-    document.cookie = `locale=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
     
     // Update URL with new locale
     const currentPath = window.location.pathname;
     const pathWithoutLocale = currentPath.replace(/^\/(ua|en)/, '');
-    router.push(`/${newLocale}${pathWithoutLocale}`);
+    
+    // Only navigate if the locale is actually different
+    const currentLocale = currentPath.split('/')[1];
+    if (currentLocale !== newLocale) {
+      router.push(`/${newLocale}${pathWithoutLocale}`);
+    }
   }, [router]);
 
   const toggleLocale = useCallback(() => {
