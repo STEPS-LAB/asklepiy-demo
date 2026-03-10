@@ -313,5 +313,6 @@ export default function DeclarationPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

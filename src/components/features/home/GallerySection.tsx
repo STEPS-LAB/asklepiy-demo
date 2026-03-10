@@ -20,19 +20,16 @@ const VISIBLE_IMAGES = 3;
 // Animation variants for smooth sliding
 const sliderVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 30 : -30,
+    x: direction > 0 ? 100 : -100,
     opacity: 0,
-    scale: 0.98,
   }),
   center: {
     x: 0,
     opacity: 1,
-    scale: 1,
   },
   exit: (direction: number) => ({
-    x: direction > 0 ? -30 : 30,
+    x: direction > 0 ? -100 : 100,
     opacity: 0,
-    scale: 0.98,
   }),
 };
 
@@ -126,31 +123,20 @@ export function GallerySection() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  x: { type: 'spring', stiffness: 200, damping: 25, mass: 1 },
-                  opacity: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
-                  scale: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
+                  x: { type: 'spring', stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.3 },
                 }}
-                style={{ 
-                  willChange: 'transform, opacity',
-                  transform: 'translateZ(0)',
-                  WebkitTransform: 'translateZ(0)',
-                }}
+                style={{ willChange: 'transform, opacity' }}
               >
                 {visibleImages.map((image, index) => (
                   <motion.div
                     key={image.id}
                     className="relative group cursor-pointer overflow-hidden rounded-sm"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.06, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                    transition={{ delay: index * 0.08, duration: 0.3 }}
                     onClick={() => setSelectedImage(image.id)}
                     whileHover={{ scale: 1.02 }}
-                    style={{
-                      transform: 'translateZ(0)',
-                      WebkitTransform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
-                    }}
                   >
                     <div className={`aspect-square bg-gradient-to-br ${image.color} flex items-center justify-center`}>
                       <Maximize2 className="w-12 h-12 text-medical-primary-900/20 opacity-0 group-hover:opacity-100 transition-opacity" />
