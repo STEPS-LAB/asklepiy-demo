@@ -101,7 +101,7 @@
   }
 
   html {
-    @apply scroll-smooth antialiased box-border;
+    @apply scroll-smooth antialiased;
     font-feature-settings: "cv11", "ss01";
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -109,16 +109,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-
   body {
     @apply bg-medical-surface-50 text-medical-text-primary;
     @apply font-light;
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
     min-height: 100vh;
-    overflow-x: hidden;
   }
 
   /* Selection */
@@ -142,7 +137,7 @@
 
   ::-webkit-scrollbar-thumb {
     @apply bg-medical-primary-300 rounded-full;
-    
+
     &:hover {
       @apply bg-medical-primary-400;
     }
@@ -300,11 +295,6 @@
     &::-webkit-scrollbar {
       display: none;
     }
-  }
-
-  /* Prevent horizontal overflow */
-  .container {
-    max-width: 100%;
   }
 
   /* Text Balance */
