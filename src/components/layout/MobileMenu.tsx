@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, Mail, Clock, ChevronRight } from 'lucide-react';
 import { useLocale } from '@/contexts';
 import { cn } from '@/lib/utils';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -18,44 +18,45 @@ const contactNumbers = [
   { label: 'Педіатрія', labelEn: 'Pediatrics', phone: '+38 (0412) 34-56-78' },
 ];
 
-// Optimized variants for iOS Safari
-const backdropVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-const menuPanelVariants = {
-  hidden: { x: '100%' },
-  visible: { x: 0 },
-  exit: { x: '100%' },
-};
-
-const listItemVariants = {
-  hidden: { opacity: 0, x: 20 },
-  visible: { opacity: 1, x: 0 },
-};
-
 export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
   const { locale } = useLocale();
 
   // Prevent body scroll on iOS more reliably
   useEffect(() => {
     if (isOpen) {
+      const scrollY = window.scrollY;
       document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
     } else {
+      const scrollY = document.body.style.top;
       document.body.style.position = '';
+      document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+      }
     }
     return () => {
       document.body.style.position = '';
+      document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
@@ -63,25 +64,31 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
         <>
           {/* Backdrop - optimized for iOS */}
           <motion.div
-            className="fixed inset-0 bg-medical-primary-900/60 z-overlay"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={backdropVariants}
-            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-medical-primary-900/60 z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             onClick={onClose}
-            style={{ willChange: 'opacity' }}
           />
 
-          {/* Menu Panel - optimized for iOS */}
+          {/* Menu Panel - optimized for iOS with hardware acceleration */}
           <motion.div
-            className="fixed inset-y-0 right-0 w-full max-w-md bg-white z-overlay overflow-y-auto"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={menuPanelVariants}
-            transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-            style={{ willChange: 'transform' }}
+            className="fixed inset-y-0 right-0 w-full max-w-md bg-white z-40 overflow-y-auto -webkit-overflow-scrolling-touch"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ 
+              duration: 0.35, 
+              ease: [0.32, 0.72, 0, 1],
+              type: 'tween'
+            }}
+            style={{ 
+              transform: 'translateZ(0)',
+              WebkitTransform: 'translateZ(0)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+            }}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-medical-surface-200">
@@ -110,7 +117,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                     key={link.href}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
+                    transition={{ delay: index * 0.05, duration: 0.2 }}
                   >
                     <a
                       href={link.href}
@@ -138,7 +145,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                     key={contact.phone}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + index * 0.05 }}
+                    transition={{ delay: 0.2 + index * 0.05, duration: 0.2 }}
                   >
                     <a
                       href={`tel:${contact.phone.replace(/\D/g, '')}`}

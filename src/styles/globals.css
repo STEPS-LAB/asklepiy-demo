@@ -380,4 +380,9 @@
   .overflow-scroll-touch {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* iOS touch scrolling for mobile menu */
+  .-webkit-overflow-scrolling-touch {
+    -webkit-overflow-scrolling: touch;
+  }
 }
