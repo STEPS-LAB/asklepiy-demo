@@ -16,7 +16,7 @@ const programs = [
       ua: 'Комплексна програма медичного обслуговування для всієї родини',
       en: 'Comprehensive medical service program for the whole family',
     },
-    href: '/programs/family',
+    href: '/asklepiy-rodyna',
     color: 'from-medical-accent-500 to-medical-accent-600',
   },
   {
@@ -29,20 +29,20 @@ const programs = [
       ua: 'Профілактична програма для раннього виявлення захворювань',
       en: 'Preventive program for early disease detection',
     },
-    href: '/programs/screening',
+    href: '/screening-40',
     color: 'from-medical-primary-600 to-medical-primary-700',
   },
   {
     icon: TestTube2,
     title: {
-      ua: 'Лабараторні послуги',
+      ua: 'Лабораторні послуги',
       en: 'Laboratory Services',
     },
     description: {
       ua: 'Сучасні аналізи з швидким результатом',
       en: 'Modern tests with fast results',
     },
-    href: '/analyses',
+    href: '/directions#laboratory',
     color: 'from-medical-accent-400 to-medical-primary-600',
   },
 ];

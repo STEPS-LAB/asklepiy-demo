@@ -2,7 +2,8 @@
 
 import { useLocale } from '@/contexts';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   User,
   Baby,
@@ -175,7 +176,15 @@ const departments: Department[] = [
 
 export default function DirectionsPage() {
   const { locale } = useLocale();
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<DepartmentTab>('adult');
+
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '') as DepartmentTab;
+    if (hash && ['adult', 'children', 'diagnostics', 'laboratory', 'checkups', 'surgery'].includes(hash)) {
+      setActiveTab(hash);
+    }
+  }, []);
 
   const activeDepartment = departments.find((d) => d.id === activeTab) || departments[0];
 
