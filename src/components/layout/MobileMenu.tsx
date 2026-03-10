@@ -104,7 +104,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
           {/* Backdrop - optimized for iOS */}
           <motion.div
             className={cn(
-              'fixed inset-0 z-40',
+              'fixed inset-0 z-50',
               isIOS ? 'bg-medical-primary-900/50' : 'bg-medical-primary-900/60 backdrop-blur-sm'
             )}
             initial={{ opacity: 0 }}
@@ -124,7 +124,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
           {/* Menu Panel - GPU isolated layer */}
           <motion.div
             className={cn(
-              'fixed inset-y-0 right-0 w-full max-w-md z-40 overflow-y-auto',
+              'fixed inset-y-0 right-0 w-full max-w-md z-50 overflow-y-auto',
               '-webkit-overflow-scrolling-touch',
               isIOS 
                 ? 'bg-white/90 backdrop-blur-md ios-backdrop-reduced' 

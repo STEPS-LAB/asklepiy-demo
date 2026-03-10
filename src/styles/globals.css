@@ -459,6 +459,8 @@ html {
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
+  /* Ensure sections stay behind the menu */
+  z-index: 1 !important;
 }
 
 /* Force GPU for all fixed/sticky elements */
