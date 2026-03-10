@@ -106,7 +106,7 @@ export function LaboratorySearch() {
         >
           <div className="bg-medical-surface-50 rounded-sm overflow-hidden">
             {/* Header */}
-            <div className="grid grid-cols-[50%_30%_20%] gap-4 p-4 bg-medical-primary-900 text-white font-medium">
+            <div className="grid grid-cols-[50%_28%_22%] gap-4 p-4 bg-medical-primary-900 text-white font-medium">
               <div>
                 {locale === 'ua' ? 'Назва' : 'Name'}
               </div>
@@ -123,7 +123,7 @@ export function LaboratorySearch() {
               {filteredTests.map((test, index) => (
                 <motion.div
                   key={test.id}
-                  className="grid grid-cols-[50%_30%_20%] gap-4 p-4 items-center hover:bg-medical-accent-50 transition-colors"
+                  className="grid grid-cols-[50%_28%_22%] gap-4 p-4 items-center hover:bg-medical-accent-50 transition-colors"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
