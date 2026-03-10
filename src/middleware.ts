@@ -13,6 +13,19 @@ export default function middleware(request: NextRequest) {
   // Run the default intl middleware first
   const response = intlMiddleware(request);
 
+  // Get the locale from the URL
+  const pathname = request.nextUrl.pathname;
+  const pathLocale = pathname.split('/')[1];
+  
+  // If the URL has a valid locale, save it to cookie for persistence
+  if (locales.includes(pathLocale as typeof locales[number])) {
+    response.cookies.set('locale', pathLocale, {
+      path: '/',
+      maxAge: 31536000,
+      sameSite: 'lax',
+    });
+  }
+
   return response;
 }
 
