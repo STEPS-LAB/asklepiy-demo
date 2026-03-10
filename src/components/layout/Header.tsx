@@ -264,7 +264,7 @@ export function Header() {
             </div>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       {/* Mobile Menu */}
       <MobileMenu
