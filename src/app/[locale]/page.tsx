@@ -110,31 +110,65 @@ export default function HomePage() {
       >
         {/* Background Pattern - static for better iOS performance */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <div className="absolute top-20 right-0 w-96 h-96 bg-medical-accent-200 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-72 h-72 bg-medical-primary-200 rounded-full blur-3xl" />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.3, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.2 }}
+            className="absolute top-20 right-0 w-96 h-96 bg-medical-accent-200 rounded-full blur-3xl"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.3, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.4 }}
+            className="absolute bottom-0 left-0 w-72 h-72 bg-medical-primary-200 rounded-full blur-3xl"
+          />
         </div>
 
         <div className="container mx-auto px-4 pt-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Content - no scroll-based animations to avoid conflicts */}
-            <div>
-              <span className="inline-block px-4 py-2 bg-medical-accent-100 text-medical-accent-700 rounded-sm text-sm font-medium mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="inline-block px-4 py-2 bg-medical-accent-100 text-medical-accent-700 rounded-sm text-sm font-medium mb-6"
+              >
                 {locale === 'ua' ? 'Провідний медичний центр України' : 'Leading medical center of Ukraine'}
-              </span>
+              </motion.span>
 
-              <h1 className="font-secondary text-4xl md:text-5xl lg:text-6xl font-medium text-medical-primary-900 leading-tight mb-6">
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="font-secondary text-4xl md:text-5xl lg:text-6xl font-medium text-medical-primary-900 leading-tight mb-6"
+              >
                 {locale === 'ua'
                   ? 'Сучасна медицина з турботою про вас'
                   : 'Modern Medicine with Care for You'}
-              </h1>
+              </motion.h1>
 
-              <p className="text-lg text-medical-text-secondary mb-8 max-w-xl">
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="text-lg text-medical-text-secondary mb-8 max-w-xl"
+              >
                 {locale === 'ua'
                   ? 'Провідний приватний медичний центр України з інноваційними підходами до лікування та діагностики'
                   : "Ukraine's leading private clinic with innovative approaches to treatment and diagnostics"}
-              </p>
+              </motion.p>
 
-              <div className="flex flex-wrap gap-4">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="flex flex-wrap gap-4"
+              >
                 <Button size="lg" rightIcon={<ArrowRight className="w-4 h-4" />} onClick={() => setIsBookingOpen(true)}>
                   {locale === 'ua' ? 'Записатися на прийом' : 'Book Appointment'}
                 </Button>
@@ -143,19 +177,34 @@ export default function HomePage() {
                     {locale === 'ua' ? 'Зателефонувати' : 'Call Now'}
                   </Button>
                 </a>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Hero Image - static for better iOS performance */}
             <div className="relative hidden lg:block flex items-center">
-              <div className="relative z-10 rounded-sm overflow-hidden shadow-medical-xl max-w-[85%] ml-auto w-full">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="relative z-10 rounded-sm overflow-hidden shadow-medical-xl max-w-[85%] ml-auto w-full"
+              >
                 <div className="aspect-[4/5] bg-gradient-to-br from-medical-primary-200 to-medical-accent-200 flex items-center justify-center">
                   <Stethoscope className="w-28 h-28 text-medical-primary-900/20" />
                 </div>
-              </div>
+              </motion.div>
               {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-full h-full bg-medical-accent-100 rounded-sm -z-10" />
-              <div className="absolute -bottom-4 -left-4 w-3/4 h-3/4 bg-medical-primary-100 rounded-sm -z-10" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+                className="absolute -top-4 -right-4 w-full h-full bg-medical-accent-100 rounded-sm -z-10"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
+                className="absolute -bottom-4 -left-4 w-3/4 h-3/4 bg-medical-primary-100 rounded-sm -z-10"
+              />
             </div>
           </div>
         </div>
@@ -167,7 +216,13 @@ export default function HomePage() {
       {/* Services Section */}
       <section className="section bg-medical-surface-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="section-title">
               {locale === 'ua' ? 'Напрямки' : 'Medical Directions'}
             </h2>
@@ -176,30 +231,44 @@ export default function HomePage() {
                 ? 'Комплексний підхід до вашого здоров\'я'
                 : 'Comprehensive approach to your health'}
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service) => (
-              <Link key={service.href} href={service.href}>
-                <Card
-                  className="p-6 h-full group cursor-pointer"
-                  interactive
-                >
-                  <div className="w-14 h-14 bg-medical-accent-100 rounded-sm flex items-center justify-center mb-4 group-hover:bg-medical-accent-600 transition-colors">
-                    <service.icon className="w-7 h-7 text-medical-accent-600 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-lg font-medium text-medical-primary-900 mb-2">
-                    {locale === 'ua' ? service.title : service.titleEn}
-                  </h3>
-                  <p className="text-medical-text-secondary text-sm">
-                    {locale === 'ua' ? service.description : service.descriptionEn}
-                  </p>
-                </Card>
-              </Link>
+            {services.map((service, index) => (
+              <motion.div
+                key={service.href}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Link href={service.href}>
+                  <Card
+                    className="p-6 h-full group cursor-pointer"
+                    interactive
+                  >
+                    <div className="w-14 h-14 bg-medical-accent-100 rounded-sm flex items-center justify-center mb-4 group-hover:bg-medical-accent-600 transition-colors">
+                      <service.icon className="w-7 h-7 text-medical-accent-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <h3 className="text-lg font-medium text-medical-primary-900 mb-2">
+                      {locale === 'ua' ? service.title : service.titleEn}
+                    </h3>
+                    <p className="text-medical-text-secondary text-sm">
+                      {locale === 'ua' ? service.description : service.descriptionEn}
+                    </p>
+                  </Card>
+                </Link>
+              </motion.div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             <Link href="/directions">
               <Button variant="outline">
                 <span className="flex items-center">
@@ -208,7 +277,7 @@ export default function HomePage() {
                 </span>
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
