@@ -21,32 +21,26 @@ const contactNumbers = [
 export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
   const { locale } = useLocale();
 
-  // Prevent body scroll on iOS more reliably and disable conflicting animations
+12  // Prevent body scroll on iOS without causing scroll jump
   useEffect(() => {
     if (isOpen) {
       const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
+      // Store scroll position in a data attribute for restoration
+      document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
+      // Use overflow: hidden instead of position: fixed to prevent scroll jump
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'relative';
       document.documentElement.classList.add('menu-open');
     } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
       document.body.style.overflow = '';
+      document.body.style.position = '';
       document.documentElement.classList.remove('menu-open');
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-      }
     }
     return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
       document.body.style.overflow = '';
+      document.body.style.position = '';
       document.documentElement.classList.remove('menu-open');
+      document.documentElement.style.removeProperty('--scroll-y');
     };
   }, [isOpen]);
 
@@ -71,22 +65,21 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             onClick={onClose}
           />
 
-          {/* Menu Panel - optimized for iOS with hardware acceleration */}
+          {/* Menu Panel - optimized for iOS with hardware acceleration and glass effect */}
           <motion.div
-            className="fixed inset-y-0 right-0 w-full max-w-md bg-white z-40 overflow-y-auto -webkit-overflow-scrolling-touch"
+            className="fixed inset-y-0 right-0 w-full max-w-md bg-white/80 backdrop-blur-md z-40 overflow-y-auto -webkit-overflow-scrolling-touch"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ 
-              duration: 0.35, 
-              ease: [0.32, 0.72, 0, 1],
-              type: 'tween'
+            transition={{
+              duration: 0.5,
+              ease: [0.16, 1, 0.3, 1],
             }}
-            style={{ 
+            style={{
               transform: 'translateZ(0)',
               WebkitTransform: 'translateZ(0)',
               backfaceVisibility: 'hidden',

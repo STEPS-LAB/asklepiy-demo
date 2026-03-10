@@ -166,9 +166,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Statistics Section
+      {/* Statistics Section */}
       <StatisticsSection />
-      */}
 
       {/* Services Section */}
       <section className="section bg-medical-surface-50">
