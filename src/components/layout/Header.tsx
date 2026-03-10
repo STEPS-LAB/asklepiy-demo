@@ -33,21 +33,12 @@ const navLinks = [
   { href: '/contacts', label: 'Контакти', labelEn: 'Contacts' },
 ];
 
-interface HeaderProps {
-  onMenuToggle?: (isOpen: boolean) => void;
-}
-
-export function Header({ onMenuToggle }: HeaderProps) {
+export function Header() {
   const { locale } = useLocale();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPhoneDropdownOpen, setIsPhoneDropdownOpen] = useState(false);
   const phoneDropdownRef = useRef<HTMLDivElement>(null);
-
-  // Notify parent of menu state changes
-  useEffect(() => {
-    onMenuToggle?.(isMobileMenuOpen);
-  }, [isMobileMenuOpen, onMenuToggle]);
 
   useEffect(() => {
     const handleScroll = () => {

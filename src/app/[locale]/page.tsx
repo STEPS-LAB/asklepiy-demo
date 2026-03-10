@@ -32,7 +32,6 @@ import {
   StatisticsSection,
 } from '@/components/features/home';
 import { Header } from '@/components/layout';
-import { cn } from '@/lib/utils';
 
 const services = [
   {
@@ -103,23 +102,14 @@ const features = [
 export default function HomePage() {
   const { locale } = useLocale();
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
-      <Header onMenuToggle={(isOpen) => setIsMenuOpen(isOpen)} />
+      <Header />
       
       {/* Hero Section */}
       <section
-        className={cn(
-          "relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-medical-primary-50 via-white to-medical-accent-50",
-          "ios-isolate"
-        )}
-        data-animate="hero"
-        style={{
-          transform: 'translateZ(0)',
-          WebkitTransform: 'translateZ(0)',
-        }}
+        className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-medical-primary-50 via-white to-medical-accent-50"
       >
         {/* Background Pattern - static for better iOS performance */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
@@ -134,12 +124,6 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className={cn("ios-gpu-layer", isMenuOpen ? "motion-freeze" : "")}
-              style={{
-                transform: 'translateZ(0)',
-                WebkitTransform: 'translateZ(0)',
-                willChange: isMenuOpen ? 'auto' : 'transform',
-              }}
             >
               <span className="inline-block px-4 py-2 bg-medical-accent-100 text-medical-accent-700 rounded-sm text-sm font-medium mb-6">
                 {locale === 'ua' ? 'Провідний медичний центр України' : 'Leading medical center of Ukraine'}
