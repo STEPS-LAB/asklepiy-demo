@@ -3,7 +3,7 @@
 import { useLocale } from '@/contexts';
 import { motion } from 'framer-motion';
 import { Building2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState, useRef, TouchEvent } from 'react';
+import { useState, useRef, TouchEvent, useEffect } from 'react';
 
 const partners = [
   { id: 1, name: 'Полісся', nameEn: 'Polissia' },
@@ -14,15 +14,27 @@ const partners = [
   { id: 6, name: 'CSD Lab', nameEn: 'CSD Lab' },
 ];
 
-const VISIBLE_PARTNERS = 3;
+const VISIBLE_PARTNERS_MOBILE = 3;
 
 export function PartnersSection() {
   const { locale } = useLocale();
   const [startIndex, setStartIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
 
+  const VISIBLE_PARTNERS = isMobile ? VISIBLE_PARTNERS_MOBILE : partners.length;
   const visiblePartners = partners.slice(startIndex, startIndex + VISIBLE_PARTNERS);
+
+  // Detect mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handlePrev = () => {
     setStartIndex((prev) => Math.max(0, prev - 1));
@@ -33,7 +45,7 @@ export function PartnersSection() {
   };
 
   const canGoPrev = startIndex > 0;
-  const canGoNext = startIndex < partners.length - VISIBLE_PARTNERS;
+  const canGoNext = startIndex < partners.length - VISIBLE_PARTNERS && isMobile;
 
   const handleTouchStart = (e: TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -79,9 +91,9 @@ export function PartnersSection() {
         <div className="relative">
           <div 
             className="grid grid-cols-3 md:grid-cols-6 gap-6"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onTouchStart={isMobile ? handleTouchStart : undefined}
+            onTouchMove={isMobile ? handleTouchMove : undefined}
+            onTouchEnd={isMobile ? handleTouchEnd : undefined}
           >
             {visiblePartners.map((partner, index) => (
               <motion.div
@@ -104,55 +116,61 @@ export function PartnersSection() {
 
           {/* Desktop Navigation Arrows */}
           <div className="absolute -top-20 right-0 flex gap-2 max-md:hidden">
-            <button
-              onClick={handlePrev}
-              disabled={!canGoPrev}
-              className={`w-12 h-12 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
-                !canGoPrev
-                  ? 'opacity-30 cursor-not-allowed'
-                  : 'hover:bg-medical-accent-500 hover:text-white'
-              }`}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={!canGoNext}
-              className={`w-12 h-12 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
-                !canGoNext
-                  ? 'opacity-30 cursor-not-allowed'
-                  : 'hover:bg-medical-accent-500 hover:text-white'
-              }`}
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+            {isMobile && (
+              <>
+                <button
+                  onClick={handlePrev}
+                  disabled={!canGoPrev}
+                  className={`w-12 h-12 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
+                    !canGoPrev
+                      ? 'opacity-30 cursor-not-allowed'
+                      : 'hover:bg-medical-accent-500 hover:text-white'
+                  }`}
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  disabled={!canGoNext}
+                  className={`w-12 h-12 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
+                    !canGoNext
+                      ? 'opacity-30 cursor-not-allowed'
+                      : 'hover:bg-medical-accent-500 hover:text-white'
+                  }`}
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Navigation */}
-          <div className="flex md:hidden justify-center gap-2 mt-6">
-            <button
-              onClick={handlePrev}
-              disabled={!canGoPrev}
-              className={`w-10 h-10 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
-                !canGoPrev
-                  ? 'opacity-30 cursor-not-allowed'
-                  : 'hover:bg-medical-accent-500 hover:text-white'
-              }`}
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleNext}
-              disabled={!canGoNext}
-              className={`w-10 h-10 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
-                !canGoNext
-                  ? 'opacity-30 cursor-not-allowed'
-                  : 'hover:bg-medical-accent-500 hover:text-white'
-              }`}
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          {isMobile && (
+            <div className="flex md:hidden justify-center gap-2 mt-6">
+              <button
+                onClick={handlePrev}
+                disabled={!canGoPrev}
+                className={`w-10 h-10 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
+                  !canGoPrev
+                    ? 'opacity-30 cursor-not-allowed'
+                    : 'hover:bg-medical-accent-500 hover:text-white'
+                }`}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={handleNext}
+                disabled={!canGoNext}
+                className={`w-10 h-10 rounded-full border-2 border-medical-accent-500 flex items-center justify-center transition-colors ${
+                  !canGoNext
+                    ? 'opacity-30 cursor-not-allowed'
+                    : 'hover:bg-medical-accent-500 hover:text-white'
+                }`}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

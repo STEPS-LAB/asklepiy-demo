@@ -3,6 +3,7 @@
 import { useLocale } from '@/contexts';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const reviews = [
   {
@@ -49,6 +50,18 @@ const reviews = [
 
 export function ReviewsSection() {
   const { locale } = useLocale();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const visibleReviews = isMobile ? reviews.slice(0, 3) : reviews;
 
   return (
     <section className="section bg-medical-surface-50">
@@ -70,7 +83,7 @@ export function ReviewsSection() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {reviews.map((review, index) => (
+          {visibleReviews.map((review, index) => (
             <motion.div
               key={review.id}
               className="bg-white p-6 rounded-sm shadow-medical-md"

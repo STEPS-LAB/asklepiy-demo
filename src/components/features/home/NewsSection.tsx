@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
 import { Button } from '@/components/ui';
+import { useState, useEffect } from 'react';
 
 const news = [
   {
@@ -71,6 +72,18 @@ const news = [
 
 export function NewsSection() {
   const { locale } = useLocale();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const visibleNews = isMobile ? news.slice(0, 3) : news;
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -108,7 +121,7 @@ export function NewsSection() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {news.map((item, index) => (
+          {visibleNews.map((item, index) => (
             <motion.div
               key={item.id}
               className="flex flex-col h-full"
