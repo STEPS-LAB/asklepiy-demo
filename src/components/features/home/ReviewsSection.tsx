@@ -3,7 +3,6 @@
 import { useLocale } from '@/contexts';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
-import { Button } from '@/components/ui';
 
 const reviews = [
   {
@@ -110,30 +109,12 @@ export function ReviewsSection() {
               <Quote className="w-6 h-6 text-medical-accent-200 mb-3" />
 
               {/* Review Text */}
-              <p className="text-medical-text-secondary text-sm leading-relaxed mb-4">
+              <p className="text-medical-text-secondary text-sm leading-relaxed">
                 {review.text[locale === 'ua' ? 'ua' : 'en']}
               </p>
-
-              {/* Read More Link */}
-              <button className="text-medical-accent-600 text-sm font-medium hover:underline">
-                {locale === 'ua' ? 'Читати більше' : 'Read More'}
-              </button>
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <a href="/reviews">
-            <Button variant="outline">
-              {locale === 'ua' ? 'Всі відгуки' : 'All Reviews'}
-            </Button>
-          </a>
-        </motion.div>
       </div>
     </section>
   );
