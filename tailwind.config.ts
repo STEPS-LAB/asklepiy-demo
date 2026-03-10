@@ -190,6 +190,33 @@ const config: Config = {
         'toast': '60',
         'tooltip': '70',
       },
+      
+      // Transform for GPU acceleration
+      transform: {
+        '3d': 'translate3d(0, 0, 0)',
+        'gpu': 'translate3d(0, 0, 0)',
+      },
+      
+      // Backdrop blur variants for iOS
+      backdropBlur: {
+        'xs': '2px',
+        'ios': '8px',
+        'ios-sm': '4px',
+      },
+      
+      // Will-change utilities
+      willChange: {
+        'transform': 'transform',
+        'opacity': 'opacity',
+        'transform-opacity': 'transform, opacity',
+        'auto': 'auto',
+      },
+      
+      // Contain property for layer isolation
+      contain: {
+        'layout-paint': 'layout paint',
+        'layout-paint-style': 'layout paint style',
+      },
     },
   },
   plugins: [],

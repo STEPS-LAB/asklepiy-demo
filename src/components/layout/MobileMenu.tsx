@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, Mail, Clock, ChevronRight } from 'lucide-react';
 import { useLocale } from '@/contexts';
 import { cn } from '@/lib/utils';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -18,33 +18,72 @@ const contactNumbers = [
   { label: 'Педіатрія', labelEn: 'Pediatrics', phone: '+38 (0412) 34-56-78' },
 ];
 
+// Apple-style spring physics for WebKit
+const SPRING_TRANSITION = {
+  type: 'spring' as const,
+  stiffness: 300,
+  damping: 30,
+  mass: 0.8,
+  restDelta: 0.001,
+};
+
+const FADE_TRANSITION = {
+  duration: 0.4,
+  ease: [0.16, 1, 0.3, 1],
+};
+
 export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
   const { locale } = useLocale();
+  const [isIOS, setIsIOS] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-12  // Prevent body scroll on iOS without causing scroll jump
+  // Detect iOS on mount (avoid SSR mismatch)
+  useEffect(() => {
+    setMounted(true);
+    setIsIOS(
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
+    );
+  }, []);
+
+  // Background freeze logic + scroll lock
   useEffect(() => {
     if (isOpen) {
       const scrollY = window.scrollY;
-      // Store scroll position in a data attribute for restoration
       document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
-      // Use overflow: hidden instead of position: fixed to prevent scroll jump
+      
+      // Lock scroll without position: fixed (prevents jump)
       document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
       document.body.style.position = 'relative';
+      
+      // Add menu-open class for background freezing
       document.documentElement.classList.add('menu-open');
+      
+      // Force GPU layer promotion for entire document
+      document.documentElement.style.transform = 'translateZ(0)';
+      document.documentElement.style.webkitTransform = 'translateZ(0)';
     } else {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
       document.body.style.position = '';
       document.documentElement.classList.remove('menu-open');
+      document.documentElement.style.transform = '';
+      document.documentElement.style.webkitTransform = '';
+      document.documentElement.style.removeProperty('--scroll-y');
     }
+    
     return () => {
       document.body.style.overflow = '';
+      document.body.style.touchAction = '';
       document.body.style.position = '';
       document.documentElement.classList.remove('menu-open');
+      document.documentElement.style.transform = '';
+      document.documentElement.style.webkitTransform = '';
       document.documentElement.style.removeProperty('--scroll-y');
     };
   }, [isOpen]);
 
-  // Handle escape key
+  // Escape key handler
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -55,39 +94,66 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
+  // Prevent re-renders during animation
+  if (!mounted) return null;
+
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isOpen && (
         <>
           {/* Backdrop - optimized for iOS */}
           <motion.div
-            className="fixed inset-0 bg-medical-primary-900/60 z-40"
+            className={cn(
+              'fixed inset-0 z-40',
+              isIOS ? 'bg-medical-primary-900/50' : 'bg-medical-primary-900/60 backdrop-blur-sm'
+            )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={FADE_TRANSITION}
             onClick={onClose}
-          />
-
-          {/* Menu Panel - optimized for iOS with hardware acceleration and glass effect */}
-          <motion.div
-            className="fixed inset-y-0 right-0 w-full max-w-md bg-white/80 backdrop-blur-md z-40 overflow-y-auto -webkit-overflow-scrolling-touch"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{
-              duration: 0.5,
-              ease: [0.16, 1, 0.3, 1],
-            }}
             style={{
+              willChange: 'opacity',
               transform: 'translateZ(0)',
               WebkitTransform: 'translateZ(0)',
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
             }}
+          />
+
+          {/* Menu Panel - GPU isolated layer */}
+          <motion.div
+            className={cn(
+              'fixed inset-y-0 right-0 w-full max-w-md z-40 overflow-y-auto',
+              '-webkit-overflow-scrolling-touch',
+              isIOS 
+                ? 'bg-white/90 backdrop-blur-md ios-backdrop-reduced' 
+                : 'bg-white/80 backdrop-blur-xl'
+            )}
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={SPRING_TRANSITION}
+            style={{
+              // Critical: Force GPU acceleration
+              transform: 'translate3d(0, 0, 0)',
+              WebkitTransform: 'translate3d(0, 0, 0)',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              perspective: '1000px',
+              WebkitPerspective: '1000px',
+              // Layer isolation
+              contain: 'layout paint style',
+              willChange: 'transform',
+              // Use transform-gpu for better performance
+              transformOrigin: 'right center',
+            }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-medical-surface-200">
+            <div 
+              className="flex items-center justify-between p-6 border-b border-medical-surface-200 ios-gpu-layer"
+              style={{ transform: 'translateZ(0)' }}
+            >
               <div>
                 <span className="block text-medical-primary-900 font-secondary font-medium text-xl">
                   {locale === 'ua' ? 'Асклепій' : 'Asklepiy'}
@@ -113,7 +179,12 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                     key={link.href}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.2 }}
+                    transition={{ 
+                      delay: index * 0.05, 
+                      duration: 0.25,
+                      ease: [0.16, 1, 0.3, 1] 
+                    }}
+                    style={{ transform: 'translateZ(0)' }}
                   >
                     <a
                       href={link.href}
@@ -141,7 +212,12 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
                     key={contact.phone}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + index * 0.05, duration: 0.2 }}
+                    transition={{ 
+                      delay: 0.2 + index * 0.05, 
+                      duration: 0.25,
+                      ease: [0.16, 1, 0.3, 1] 
+                    }}
+                    style={{ transform: 'translateZ(0)' }}
                   >
                     <a
                       href={`tel:${contact.phone.replace(/\D/g, '')}`}
