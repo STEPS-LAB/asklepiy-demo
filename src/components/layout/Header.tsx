@@ -26,9 +26,8 @@ const workingHours = {
 
 const navLinks = [
   { href: '/directions', label: 'Напрямки', labelEn: 'Services' },
-  { href: '/prices', label: 'Ціни', labelEn: 'Prices' },
+  { href: '/analyses', label: 'Послуги', labelEn: 'Services' },
   { href: '/news', label: 'Новини', labelEn: 'News' },
-  { href: '/analyses', label: 'Аналізи', labelEn: 'Lab Tests' },
   { href: '/asklepiy-rodyna', label: 'Заключити декларацію', labelEn: 'Sign Declaration' },
   { href: '/about', label: 'Про нас', labelEn: 'About' },
   { href: '/contacts', label: 'Контакти', labelEn: 'Contacts' },

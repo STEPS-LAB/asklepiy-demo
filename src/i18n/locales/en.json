@@ -27,9 +27,8 @@
   "navigation": {
     "home": "Home",
     "directions": "Services",
-    "prices": "Prices",
+    "services": "Services",
     "news": "News & Promotions",
-    "analyses": "Lab Tests",
     "declaration": "Sign Declaration",
     "about": "About Us",
     "contacts": "Contacts",
@@ -218,6 +217,29 @@
     "preparation": "Test preparation",
     "resultsReady": "Results ready",
     "downloadResults": "Download results"
+  },
+  "services": {
+    "title": "Services & Prices",
+    "subtitle": "Complete list of medical services with transparent pricing",
+    "searchService": "Search service",
+    "categories": {
+      "adultPolyclinic": "Adult Polyclinic",
+      "childrenPolyclinic": "Children's Polyclinic",
+      "diagnostics": "Diagnostic Methods",
+      "surgeries": "Surgeries",
+      "checkups": "Check-ups",
+      "laboratory": "Laboratory"
+    },
+    "contactCenter": "Contact Center",
+    "workingHours": "Working Hours",
+    "serviceCode": "Code",
+    "serviceName": "Service Name",
+    "price": "Price",
+    "directions": "specializations",
+    "helpChoosing": "Need help choosing services?",
+    "helpChoosingText": "Our specialists will help you choose the necessary services and schedule an appointment",
+    "callNow": "Call Now",
+    "bookOnline": "Book Online"
   },
   "declaration": {
     "title": "Doctor Declaration",

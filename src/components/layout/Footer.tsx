@@ -11,8 +11,7 @@ import { staggerContainerVariants, fadeInUpVariants } from '@/lib/motion';
 const footerLinks = {
   services: [
     { href: '/directions', label: 'Напрямки', labelEn: 'Services' },
-    { href: '/prices', label: 'Ціни', labelEn: 'Prices' },
-    { href: '/analyses', label: 'Аналізи', labelEn: 'Lab Tests' },
+    { href: '/analyses', label: 'Послуги', labelEn: 'Services' },
     { href: '/doctors', label: 'Лікарі', labelEn: 'Doctors' },
   ],
   clinic: [

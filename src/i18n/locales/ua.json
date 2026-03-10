@@ -27,9 +27,8 @@
   "navigation": {
     "home": "Головна",
     "directions": "Напрямки",
-    "prices": "Ціни",
+    "services": "Послуги",
     "news": "Новини та Акції",
-    "analyses": "Аналізи",
     "declaration": "Заключити декларацію",
     "about": "Про нас",
     "contacts": "Контакти",
@@ -218,6 +217,29 @@
     "preparation": "Підготовка до аналізів",
     "resultsReady": "Результати готові",
     "downloadResults": "Завантажити результати"
+  },
+  "services": {
+    "title": "Послуги та ціни",
+    "subtitle": "Повний перелік медичних послуг з прозорим ціноутворенням",
+    "searchService": "Пошук послуги",
+    "categories": {
+      "adultPolyclinic": "Поліклініка для дорослих",
+      "childrenPolyclinic": "Поліклініка для дітей",
+      "diagnostics": "Інструментальні методи обстеження",
+      "surgeries": "Операції",
+      "checkups": "Чек-апи",
+      "laboratory": "Лабораторія"
+    },
+    "contactCenter": "Контакт-центр",
+    "workingHours": "Графік роботи",
+    "serviceCode": "Код",
+    "serviceName": "Назва послуги",
+    "price": "Ціна",
+    "directions": "напрямків",
+    "helpChoosing": "Потрібна допомога з вибором послуг?",
+    "helpChoosingText": "Наші фахівці допоможуть підібрати необхідні послуги та запишуть на прийом",
+    "callNow": "Зателефонувати",
+    "bookOnline": "Записатися онлайн"
   },
   "declaration": {
     "title": "Декларація з лікарем",
