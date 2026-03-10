@@ -386,6 +386,18 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /* Disable all scrolling when menu is open */
+  .menu-open {
+    overflow: hidden !important;
+    height: 100% !important;
+  }
+
+  .menu-open body {
+    overflow: hidden !important;
+    touch-action: none !important;
+    position: relative !important;
+  }
+
   /* Disable animations when menu is open to prevent conflicts */
   .menu-open * {
     animation-duration: 0s !important;

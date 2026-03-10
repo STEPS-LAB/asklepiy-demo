@@ -21,24 +21,35 @@ const contactNumbers = [
 export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
   const { locale } = useLocale();
 
-  // Prevent body scroll on iOS without causing scroll jump
+  // Prevent all scrolling when menu is open
   useEffect(() => {
     if (isOpen) {
       const scrollY = window.scrollY;
-      // Store scroll position in a data attribute for restoration
+      // Store scroll position
       document.documentElement.style.setProperty('--scroll-y', `${scrollY}px`);
-      // Use overflow: hidden instead of position: fixed to prevent scroll jump
+      
+      // Lock all scrolling
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'relative';
+      document.body.style.touchAction = 'none';
+      (document.body.style as any).webkitOverflowScrolling = 'auto';
+      document.documentElement.style.overflow = 'hidden';
       document.documentElement.classList.add('menu-open');
     } else {
       document.body.style.overflow = '';
       document.body.style.position = '';
+      document.body.style.touchAction = '';
+      (document.body.style as any).webkitOverflowScrolling = '';
+      document.documentElement.style.overflow = '';
       document.documentElement.classList.remove('menu-open');
+      document.documentElement.style.removeProperty('--scroll-y');
     }
     return () => {
       document.body.style.overflow = '';
       document.body.style.position = '';
+      document.body.style.touchAction = '';
+      (document.body.style as any).webkitOverflowScrolling = '';
+      document.documentElement.style.overflow = '';
       document.documentElement.classList.remove('menu-open');
       document.documentElement.style.removeProperty('--scroll-y');
     };
