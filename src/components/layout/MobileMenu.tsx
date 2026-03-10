@@ -21,7 +21,7 @@ const contactNumbers = [
 export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
   const { locale } = useLocale();
 
-  // Prevent body scroll on iOS more reliably
+  // Prevent body scroll on iOS more reliably and disable conflicting animations
   useEffect(() => {
     if (isOpen) {
       const scrollY = window.scrollY;
@@ -29,12 +29,14 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
+      document.documentElement.classList.add('menu-open');
     } else {
       const scrollY = document.body.style.top;
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
+      document.documentElement.classList.remove('menu-open');
       if (scrollY) {
         window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
       }
@@ -44,6 +46,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
       document.body.style.top = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
+      document.documentElement.classList.remove('menu-open');
     };
   }, [isOpen]);
 

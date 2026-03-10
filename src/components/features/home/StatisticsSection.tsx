@@ -56,8 +56,8 @@ export function StatisticsSection() {
 
   return (
     <section className="section bg-medical-primary-900 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20">
+      {/* Background Pattern - static for better iOS performance */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-medical-accent-300 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-medical-primary-400 rounded-full blur-3xl" />
       </div>
@@ -67,11 +67,17 @@ export function StatisticsSection() {
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 text-center shadow-lg hover:shadow-xl transition-shadow border border-white/10 flex flex-col items-center justify-center min-h-[200px]"
+              className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 text-center shadow-lg transition-shadow border border-white/10 flex flex-col items-center justify-center min-h-[200px] will-change-transform"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: index * 0.1, duration: 0.4 }}
+              style={{
+                transform: 'translateZ(0)',
+                WebkitTransform: 'translateZ(0)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+              }}
             >
               {stat.icon ? (
                 <div className="flex flex-col items-center justify-center">

@@ -385,4 +385,18 @@
   .-webkit-overflow-scrolling-touch {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Disable animations when menu is open to prevent conflicts */
+  .menu-open * {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+
+  /* Prevent animation conflicts on iOS */
+  @media (-webkit-touch-callout: none) {
+    .menu-open .motion-div {
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
 }

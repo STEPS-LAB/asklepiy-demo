@@ -1,8 +1,8 @@
 'use client';
 
 import { useLocale } from '@/contexts';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -31,6 +31,7 @@ import {
   PartnersSection,
   StatisticsSection,
 } from '@/components/features/home';
+import { Header } from '@/components/layout';
 
 const services = [
   {
@@ -100,31 +101,27 @@ const features = [
 
 export default function HomePage() {
   const { locale } = useLocale();
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollY } = useScroll();
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-
-  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   return (
     <>
       {/* Hero Section */}
       <section
-        ref={heroRef}
         className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-medical-primary-50 via-white to-medical-accent-50"
       >
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-30">
+        {/* Background Pattern - static for better iOS performance */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className="absolute top-20 right-0 w-96 h-96 bg-medical-accent-200 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-medical-primary-200 rounded-full blur-3xl" />
         </div>
 
         <div className="container mx-auto px-4 pt-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Content */}
-            <div
-              style={{ y: heroY, opacity: heroOpacity }}
+            {/* Content - no scroll-based animations to avoid conflicts */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <span className="inline-block px-4 py-2 bg-medical-accent-100 text-medical-accent-700 rounded-sm text-sm font-medium mb-6">
                 {locale === 'ua' ? 'Провідний медичний центр України' : 'Leading medical center of Ukraine'}
@@ -152,9 +149,9 @@ export default function HomePage() {
                   </Button>
                 </a>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Hero Image */}
+            {/* Hero Image - static for better iOS performance */}
             <div className="relative hidden lg:block flex items-center">
               <div className="relative z-10 rounded-sm overflow-hidden shadow-medical-xl max-w-[85%] ml-auto w-full">
                 <div className="aspect-[4/5] bg-gradient-to-br from-medical-primary-200 to-medical-accent-200 flex items-center justify-center">
