@@ -2,8 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { ReactQueryProvider, LocaleProvider, AuthProvider, UIProvider } from '@/contexts';
-import { Header, Footer } from '@/components/layout';
-import { AIAssistant } from '@/features/ai-assistant';
+import { LayoutContent } from '@/components/layout';
 import '../../styles/globals.css';
 
 export function generateStaticParams() {
@@ -35,10 +34,7 @@ export default async function LocaleLayout({
           <AuthProvider>
             <UIProvider>
               <div className="min-h-screen flex flex-col overflow-x-hidden">
-                <Header />
-                <main className="flex-1 pt-20 overflow-x-hidden">{children}</main>
-                <Footer />
-                <AIAssistant />
+                <LayoutContent>{children}</LayoutContent>
               </div>
             </UIProvider>
           </AuthProvider>
