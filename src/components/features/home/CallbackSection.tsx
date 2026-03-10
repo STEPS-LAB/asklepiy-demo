@@ -112,7 +112,7 @@ export function CallbackSection() {
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={locale === 'ua' ? 'Іван Петренко' : 'Ivan Petrenko'}
+                      placeholder={locale === 'ua' ? 'Прізвище Імʼя' : 'Surname Name'}
                       required
                     />
                   </div>

@@ -7,6 +7,7 @@ import { Card, Button, Input } from '@/components/ui';
 import { useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { BookingModal } from '@/features/booking/BookingModal';
+import { CallbackSection } from '@/components/features/home/CallbackSection';
 
 // Main sections
 const serviceSections = [
@@ -852,35 +853,6 @@ export default function ServicesPage() {
           );
         })}
       </div>
-
-      {/* Bottom CTA */}
-      <motion.div
-        className="mt-12 text-center"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        <Card className="p-8 bg-gradient-to-r from-medical-accent-600 to-medical-accent-700 text-white">
-          <h3 className="text-xl font-medium mb-4">
-            {locale === 'ua'
-              ? 'Потрібна допомога з вибором послуг?'
-              : 'Need help choosing services?'}
-          </h3>
-          <p className="text-medical-surface-200 mb-6 max-w-md mx-auto">
-            {locale === 'ua'
-              ? 'Наші фахівці допоможуть підібрати необхідні послуги та запишуть на прийом'
-              : 'Our specialists will help you choose the necessary services and schedule an appointment'}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button variant="secondary" size="lg">
-              {locale === 'ua' ? 'Зателефонувати' : 'Call Now'}
-            </Button>
-            <Button variant="outline" size="lg" className="bg-white/10 text-white border-white hover:bg-white/20">
-              {locale === 'ua' ? 'Записатися онлайн' : 'Book Online'}
-            </Button>
-          </div>
-        </Card>
-      </motion.div>
 
       {/* Booking Modal */}
       <ServiceBookingModal
