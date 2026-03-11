@@ -378,10 +378,14 @@
     }
   }
 
-  /* Prevent animation flicker after completion */
-  .motion-div {
+  /* Prevent animation flicker after completion - Force GPU acceleration */
+  .motion-div,
+  [class*="motion-"],
+  .framer-motion {
     transform: translateZ(0);
     backface-visibility: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
   }
 
   /* Hardware acceleration for smooth animations */
@@ -400,6 +404,16 @@
   /* Hardware acceleration */
   .transform-gpu {
     transform: translate3d(0, 0, 0);
+  }
+
+  /* Critical fix: Prevent flicker on animated elements after animation completes */
+  .framer-motion-animating {
+    will-change: transform, opacity;
+  }
+
+  /* Remove will-change after animation to free up memory */
+  .framer-motion-animating[data-framer-motion-complete="true"] {
+    will-change: auto;
   }
 
   /* Prevent iOS zoom on input focus */

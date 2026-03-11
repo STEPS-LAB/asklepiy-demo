@@ -7,14 +7,17 @@ import type { CardProps } from '@/types';
 
 /**
  * Premium Card Component with enhanced animations
+ * 
+ * Critical fix: Removed conflicting CSS transitions that caused flickering.
+ * GPU acceleration is now handled by framer-motion and CSS.
  */
 export function Card({ children, className, interactive = false, onClick }: CardProps) {
   return (
     <motion.div
       className={cn(
         'bg-white rounded-sm shadow-medical-md',
-        'transition-all duration-500 ease-out',
         interactive && 'cursor-pointer hover:shadow-medical-xl',
+        'transform-gpu',
         className
       )}
       onClick={onClick}
@@ -32,13 +35,15 @@ export function Card({ children, className, interactive = false, onClick }: Card
 
 /**
  * Card with stagger animation for lists
+ * 
+ * Critical fix: Removed conflicting CSS transitions, added transform-gpu
  */
 export function CardStagger({ children, className, index = 0 }: { children: React.ReactNode; className?: string; index?: number }) {
   return (
     <motion.div
       className={cn(
         'bg-white rounded-sm shadow-medical-md',
-        'transition-all duration-500 ease-out',
+        'transform-gpu',
         className
       )}
       variants={staggerItemVariants}
@@ -191,6 +196,8 @@ export function CardGrid({
 
 /**
  * Feature Card with icon and enhanced hover effects
+ * 
+ * Critical fix: Removed conflicting CSS transitions, added transform-gpu for GPU acceleration
  */
 export function FeatureCard({
   icon,
@@ -209,8 +216,7 @@ export function FeatureCard({
     <motion.div
       className={cn(
         'bg-white rounded-sm shadow-medical-md p-6 lg:p-8',
-        'transition-all duration-500 ease-out',
-        'hover:shadow-medical-xl hover:scale-[1.02] cursor-pointer',
+        'transform-gpu',
         className
       )}
       initial={{ opacity: 0, y: 30 }}
@@ -239,6 +245,8 @@ export function FeatureCard({
 
 /**
  * Stats Card with animated numbers placeholder
+ * 
+ * Critical fix: Removed conflicting CSS transitions, added transform-gpu for GPU acceleration
  */
 export function StatsCard({
   value,
@@ -257,6 +265,7 @@ export function StatsCard({
     <motion.div
       className={cn(
         'bg-white rounded-sm shadow-medical-md p-6',
+        'transform-gpu',
         className
       )}
       initial={{ opacity: 0, scale: 0.95 }}
