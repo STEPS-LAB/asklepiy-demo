@@ -2,11 +2,13 @@ import type { Metadata } from 'next';
 import { Inter, Montserrat } from 'next/font/google';
 import '../styles/globals.css';
 
+// Optimize fonts with display swap and preload
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
   variable: '--font-inter',
   display: 'swap',
   preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 const montserrat = Montserrat({
@@ -14,6 +16,7 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
   display: 'swap',
   preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 export const metadata: Metadata = {
@@ -84,7 +87,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ua" className="scroll-smooth antialiased" suppressHydrationWarning>
-      <body className={`${inter.variable} ${montserrat.variable}`}>
+      <head>
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+      </head>
+      <body className={`${inter.variable} ${montserrat.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

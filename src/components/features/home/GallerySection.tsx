@@ -168,7 +168,7 @@ export function GallerySection() {
                   ? 'opacity-30 cursor-not-allowed'
                   : 'hover:bg-medical-accent-500 hover:text-white hover:scale-105'
               }`}
-              aria-label="Previous"
+              aria-label="Previous image"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
@@ -180,7 +180,7 @@ export function GallerySection() {
                   ? 'opacity-30 cursor-not-allowed'
                   : 'hover:bg-medical-accent-500 hover:text-white hover:scale-105'
               }`}
-              aria-label="Next"
+              aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
@@ -196,7 +196,7 @@ export function GallerySection() {
                   ? 'opacity-30 cursor-not-allowed'
                   : 'hover:bg-medical-accent-500 hover:text-white'
               }`}
-              aria-label="Previous"
+              aria-label="Previous image"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
@@ -208,7 +208,7 @@ export function GallerySection() {
                   ? 'opacity-30 cursor-not-allowed'
                   : 'hover:bg-medical-accent-500 hover:text-white'
               }`}
-              aria-label="Next"
+              aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6" />
             </button>

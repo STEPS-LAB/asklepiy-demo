@@ -2,6 +2,7 @@
 
 import { useLocale } from '@/contexts';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -18,19 +19,53 @@ import {
 } from 'lucide-react';
 import { Button, Card } from '@/components/ui';
 import { BookingModal } from '@/features/booking';
+
+// Critical components (above the fold) - loaded immediately
 import {
   ProgramsBanner,
   LaboratorySearch,
-  DoctorsSection,
-  TrustSection,
-  DeclarationSection,
-  GallerySection,
-  ReviewsSection,
-  NewsSection,
-  CallbackSection,
-  PartnersSection,
-  StatisticsSection,
 } from '@/components/features/home';
+
+// Non-critical components (below the fold) - lazy loaded
+const DoctorsSection = dynamic(
+  () => import('@/components/features/home').then((mod) => mod.DoctorsSection),
+  {
+    ssr: true,
+    loading: () => (
+      <section className="section bg-medical-surface-50">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="bg-white rounded-sm overflow-hidden shadow-medical-md">
+                <div className="aspect-[4/5] bg-medical-surface-200 animate-pulse" />
+                <div className="p-6 space-y-3">
+                  <div className="h-5 bg-medical-surface-200 animate-pulse rounded w-3/4" />
+                  <div className="h-4 bg-medical-surface-200 animate-pulse rounded w-1/2" />
+                  <div className="flex gap-4 pt-2">
+                    <div className="h-4 bg-medical-surface-200 animate-pulse rounded w-20" />
+                    <div className="h-4 bg-medical-surface-200 animate-pulse rounded w-16" />
+                  </div>
+                  <div className="flex gap-2 pt-4">
+                    <div className="flex-1 h-11 bg-medical-surface-200 animate-pulse rounded-sm" />
+                    <div className="flex-1 h-11 bg-medical-surface-200 animate-pulse rounded-sm" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ),
+  }
+);
+const TrustSection = dynamic(() => import('@/components/features/home').then((mod) => mod.TrustSection), { ssr: true });
+const DeclarationSection = dynamic(() => import('@/components/features/home').then((mod) => mod.DeclarationSection), { ssr: true });
+const GallerySection = dynamic(() => import('@/components/features/home').then((mod) => mod.GallerySection), { ssr: true });
+const ReviewsSection = dynamic(() => import('@/components/features/home').then((mod) => mod.ReviewsSection), { ssr: true });
+const NewsSection = dynamic(() => import('@/components/features/home').then((mod) => mod.NewsSection), { ssr: true });
+const PartnersSection = dynamic(() => import('@/components/features/home').then((mod) => mod.PartnersSection), { ssr: true });
+const CallbackSection = dynamic(() => import('@/components/features/home').then((mod) => mod.CallbackSection), { ssr: true });
+const StatisticsSection = dynamic(() => import('@/components/features/home').then((mod) => mod.StatisticsSection), { ssr: true });
 
 const services = [
   {
