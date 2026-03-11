@@ -93,6 +93,7 @@ export default function DoctorsPage() {
         className="text-center mb-12"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <h1 className="text-3xl md:text-4xl font-secondary font-medium text-medical-primary-900 mb-4">
           {locale === 'ua' ? 'Наші лікарі' : 'Our Doctors'}
@@ -111,7 +112,7 @@ export default function DoctorsPage() {
             key={doctor.id}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.1 }}
           >
             <Card className="overflow-hidden h-full">
               {/* Photo Placeholder */}

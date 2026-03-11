@@ -378,7 +378,13 @@
     }
   }
 
-  /* iOS Safari Performance Optimizations */
+  /* Prevent animation flicker after completion */
+  .motion-div {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Hardware acceleration for smooth animations */
   .will-change-transform {
     will-change: transform;
   }

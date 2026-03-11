@@ -29,6 +29,7 @@ export default function AboutPage() {
         className="text-center mb-16"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <h1 className="text-3xl md:text-4xl font-secondary font-medium text-medical-primary-900 mb-4">
           {locale === 'ua' ? 'Про клініку Асклепій' : 'About Asklepiy Clinic'}
@@ -48,7 +49,7 @@ export default function AboutPage() {
             className="text-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.1 }}
           >
             <Card className="p-6">
               <stat.icon className="w-8 h-8 text-medical-accent-600 mx-auto mb-3" />
@@ -68,6 +69,7 @@ export default function AboutPage() {
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           <h2 className="text-2xl font-secondary font-medium text-medical-primary-900 mb-4">
             {locale === 'ua' ? 'Наша місія' : 'Our mission'}
@@ -87,6 +89,7 @@ export default function AboutPage() {
           className="aspect-video bg-gradient-to-br from-medical-primary-200 to-medical-accent-200 rounded-sm"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         />
       </div>
 
@@ -101,7 +104,7 @@ export default function AboutPage() {
               key={value.title}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.1 }}
             >
               <Card className="p-6 text-center h-full">
                 <div className="w-14 h-14 bg-medical-accent-100 rounded-sm flex items-center justify-center mx-auto mb-4">

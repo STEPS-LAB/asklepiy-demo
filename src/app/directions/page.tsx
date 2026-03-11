@@ -235,13 +235,14 @@ export default function DirectionsPage() {
         </div>
 
         {/* Services Grid */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="w-full"
           >
             <div className="mb-6">
               <h2 className="text-xl font-medium text-medical-primary-900 bg-medical-primary-900/10 inline-block px-4 py-2 rounded-sm">
@@ -258,7 +259,7 @@ export default function DirectionsPage() {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.02 }}
+                    transition={{ delay: index * 0.03, duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                     className="flex items-center gap-3 p-3 rounded-sm hover:bg-medical-surface-100 transition-all duration-300 cursor-pointer group"
                   >
                     <div className="w-2 h-2 bg-medical-accent-400 rounded-full flex-shrink-0 group-hover:bg-medical-accent-600 transition-all duration-300" />
