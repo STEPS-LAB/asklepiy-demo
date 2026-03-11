@@ -76,9 +76,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       lg: 'px-8 py-4 text-base h-14',
     };
 
+    const isFullWidth = className?.includes('w-full');
+
     return (
       <motion.div
-        className={cn('inline-block', className?.includes('w-full') && 'w-full')}
+        className={cn(isFullWidth ? 'w-full' : 'inline-block')}
         variants={buttonHoverVariants}
         initial="rest"
         whileHover={!isLoading && !disabled ? 'hover' : undefined}

@@ -208,11 +208,11 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
         />
       )}
 
-      <div className="flex gap-3 pt-4">
-        <Button type="button" variant="ghost" onClick={handleBack} className="flex-1">
+      <div className="flex flex-col sm:flex-row gap-3 pt-4">
+        <Button type="button" variant="ghost" onClick={handleBack} className="w-full">
           {locale === 'ua' ? 'Назад' : 'Back'}
         </Button>
-        <Button type="submit" isLoading={isLoading} className="flex-1">
+        <Button type="submit" isLoading={isLoading} className="w-full">
           {locale === 'ua' ? 'Продовжити' : 'Continue'}
         </Button>
       </div>
@@ -270,11 +270,11 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
 
       {error && <p className="text-sm text-medical-status-error text-center">{error}</p>}
 
-      <div className="flex gap-3 pt-4">
-        <Button type="button" variant="ghost" onClick={handleBack} className="flex-1">
+      <div className="flex flex-col sm:flex-row gap-3 pt-4">
+        <Button type="button" variant="ghost" onClick={handleBack} className="w-full">
           {locale === 'ua' ? 'Назад' : 'Back'}
         </Button>
-        <Button type="submit" isLoading={isLoading} className="flex-1">
+        <Button type="submit" isLoading={isLoading} className="w-full">
           {locale === 'ua' ? 'Підтвердити' : 'Verify'}
         </Button>
       </div>
