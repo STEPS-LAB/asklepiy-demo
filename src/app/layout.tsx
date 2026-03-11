@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Montserrat } from 'next/font/google';
+import { ReactQueryProvider, LocaleProvider, AuthProvider, UIProvider } from '@/contexts';
+import { LayoutContent } from '@/components/layout';
 import '../styles/globals.css';
 
 const inter = Inter({
@@ -86,5 +88,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return children;
+  return (
+    <html lang="uk" className="scroll-smooth antialiased" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col overflow-x-hidden">
+        <ReactQueryProvider>
+          <LocaleProvider initialLocale="ua">
+            <AuthProvider>
+              <UIProvider>
+                <LayoutContent>{children}</LayoutContent>
+              </UIProvider>
+            </AuthProvider>
+          </LocaleProvider>
+        </ReactQueryProvider>
+      </body>
+    </html>
+  );
 }

@@ -42,6 +42,7 @@ export function Header({ onOpenBooking }: HeaderProps) {
   const [isPhoneDropdownOpen, setIsPhoneDropdownOpen] = useState(false);
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const phoneDropdownRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -133,16 +134,21 @@ export function Header({ onOpenBooking }: HeaderProps) {
               </button>
 
               {/* Mobile Menu Button */}
-              <motion.button
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
-                className="md:hidden flex p-2.5 text-medical-primary-900 hover:bg-medical-surface-100 rounded-sm transition-all"
-                onClick={() => setIsBurgerMenuOpen(true)}
+              <button
+                ref={menuButtonRef}
+                className="md:hidden flex p-2.5 text-medical-primary-900 hover:bg-medical-surface-100 rounded-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-medical-accent-600 relative z-[100000]"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setIsBurgerMenuOpen(true);
+                }}
                 aria-label="Open menu"
+                aria-expanded={isBurgerMenuOpen}
+                aria-controls="burger-menu"
+                type="button"
               >
                 <Menu className="w-6 h-6" />
-              </motion.button>
+              </button>
 
               {/* Phone Dropdown - Desktop */}
               <div ref={phoneDropdownRef} className="relative hidden md:block">

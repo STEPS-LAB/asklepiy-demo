@@ -1,4 +1,4 @@
-import { SkeletonCard } from '@/components/ui';
+import { Skeleton } from '@/components/ui';
 
 export default function Loading() {
   return (
@@ -47,7 +47,7 @@ export default function Loading() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
-              <SkeletonCard key={i} />
+              <Skeleton key={i} className="h-48 w-full" variant="rectangular" />
             ))}
           </div>
         </div>

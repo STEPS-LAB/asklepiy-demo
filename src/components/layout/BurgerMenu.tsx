@@ -282,28 +282,34 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Backdrop */}
+    <>
+      {/* Backdrop */}
+      <AnimatePresence>
+        {isOpen && (
           <motion.div
             key="burger-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, pointerEvents: 'none' }}
+            animate={{ opacity: 1, pointerEvents: 'auto' }}
+            exit={{ opacity: 0, pointerEvents: 'none' }}
             transition={{ duration: 0.15 }}
             className="fixed inset-0 bg-medical-primary-900/50 backdrop-blur-sm"
             style={{ zIndex: 99998 }}
             onClick={handleBackdropClick}
+            aria-hidden="true"
           />
+        )}
+      </AnimatePresence>
 
-          {/* Menu Panel */}
+      {/* Menu Panel */}
+      <AnimatePresence>
+        {isOpen && (
           <motion.div
             key="burger-menu"
+            id="burger-menu"
             ref={menuRef}
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            initial={{ x: '100%', pointerEvents: 'none' }}
+            animate={{ x: 0, pointerEvents: 'auto' }}
+            exit={{ x: '100%', pointerEvents: 'none' }}
             transition={{
               type: 'spring',
               stiffness: 300,
@@ -312,6 +318,9 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
             }}
             className="fixed top-0 right-0 h-[100dvh] w-full max-w-md bg-slate-50/98 backdrop-blur-md overflow-y-auto overflow-x-hidden -webkit-overflow-scrolling-touch transform-gpu"
             style={{ zIndex: 99999, willChange: 'transform, opacity' }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={locale === 'ua' ? 'Меню навігації' : 'Navigation menu'}
           >
             <div className="flex flex-col min-h-full">
               {/* Header */}
@@ -337,8 +346,8 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
               <ActionFooter onOpenBooking={onOpenBooking} locale={locale} />
             </div>
           </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

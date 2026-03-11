@@ -15,14 +15,7 @@ export { Input } from './Input';
 export { Modal, ModalSlideUp, ModalSidePanel } from './Modal';
 export {
   Skeleton,
-  SkeletonCard,
-  SkeletonText,
   SkeletonAvatar,
   SkeletonImage,
-  SkeletonList,
-  SkeletonTable,
-  SkeletonDashboard,
-  SkeletonHero,
-  SkeletonNavbar,
 } from './Skeleton';
 export { LanguageSwitcher } from './LanguageSwitcher';
