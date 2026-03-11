@@ -1,9 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, Phone, Clock, Mail } from 'lucide-react';
 import { useLocale } from '@/contexts';
 import { Button } from '@/components/ui';
@@ -47,14 +45,13 @@ function MenuHeader({ onClose, locale }: { onClose: () => void; locale: string }
           {locale === 'ua' ? 'Медичний центр' : 'Medical Center'}
         </span>
       </div>
-      <motion.button
-        whileTap={{ scale: 0.9 }}
+      <button
         onClick={onClose}
         className="p-2 text-medical-text-secondary hover:text-medical-primary-900 transition-colors"
         aria-label="Close menu"
       >
         <X className="w-6 h-6" />
-      </motion.button>
+      </button>
     </div>
   );
 }
@@ -64,25 +61,13 @@ function NavLink({
   href,
   label,
   onClick,
-  delay,
 }: {
   href: string;
   label: string;
   onClick: () => void;
-  delay: number;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
-      transition={{
-        type: 'spring',
-        stiffness: 300,
-        damping: 30,
-        delay,
-      }}
-    >
+    <div>
       <Link
         href={href}
         onClick={onClick}
@@ -91,39 +76,24 @@ function NavLink({
         <span>{label}</span>
         <ChevronRight className="w-5 h-5 text-medical-text-tertiary group-hover:text-medical-primary-900 transition-colors" />
       </Link>
-    </motion.div>
+    </div>
   );
 }
 
 // Contact Section Component
 function ContactSection({ locale }: { locale: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 0.4 }}
-      className="px-6 py-6"
-    >
+    <div className="px-6 py-6">
       <h3 className="text-medical-text-secondary font-medium text-base mb-4">
         {locale === 'ua' ? 'Контакти' : 'Contacts'}
       </h3>
 
       {/* Phone Numbers */}
       <div className="space-y-4 mb-6">
-        {contactNumbers.map((contact, index) => (
-          <motion.a
+        {contactNumbers.map((contact) => (
+          <a
             key={contact.href}
             href={contact.href}
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 10 }}
-            transition={{
-              type: 'spring',
-              stiffness: 300,
-              damping: 30,
-              delay: 0.5 + index * 0.05,
-            }}
             className="flex items-center gap-4 group"
           >
             <div className="w-10 h-10 rounded-full bg-cyan-50/80 flex items-center justify-center flex-shrink-0">
@@ -137,23 +107,12 @@ function ContactSection({ locale }: { locale: string }) {
                 {contact.phone}
               </span>
             </div>
-          </motion.a>
+          </a>
         ))}
       </div>
 
       {/* Working Hours */}
-      <motion.div
-        initial={{ opacity: 0, x: 10 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 10 }}
-        transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 30,
-          delay: 0.65,
-        }}
-        className="flex items-start gap-4 py-4 border-t border-b border-medical-surface-200/50 mb-4"
-      >
+      <div className="flex items-start gap-4 py-4 border-t border-b border-medical-surface-200/50 mb-4">
         <div className="w-10 h-10 rounded-full bg-cyan-50/80 flex items-center justify-center flex-shrink-0">
           <Clock className="w-4 h-4 text-medical-accent-600" />
         </div>
@@ -176,20 +135,11 @@ function ContactSection({ locale }: { locale: string }) {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Email */}
-      <motion.a
+      <a
         href="mailto:info@asklepiy.com"
-        initial={{ opacity: 0, x: 10 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 10 }}
-        transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 30,
-          delay: 0.7,
-        }}
         className="flex items-center gap-4 group"
       >
         <div className="w-10 h-10 rounded-full bg-cyan-50/80 flex items-center justify-center flex-shrink-0">
@@ -198,8 +148,8 @@ function ContactSection({ locale }: { locale: string }) {
         <span className="text-medical-primary-900 font-medium text-base group-hover:text-medical-accent-600 transition-colors">
           info@asklepiy.com
         </span>
-      </motion.a>
-    </motion.div>
+      </a>
+    </div>
   );
 }
 
@@ -216,21 +166,15 @@ function ActionFooter({
   }, [onOpenBooking]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30, delay: 0.8 }}
-      className="px-6 pb-8 pt-4 mt-auto"
-    >
+    <div className="px-6 pb-8 pt-4 mt-auto">
       <Button
         size="lg"
-        className="w-full bg-[#003d6b] hover:bg-[#002f55] text-white font-medium text-lg py-4 rounded-lg shadow-medical-lg transition-all hover:shadow-medical-xl pb-[max(1rem,env(safe-area-inset-bottom))] pointer-events-auto"
+        className="w-full bg-[#003d6b] hover:bg-[#002f55] text-white font-medium text-lg py-4 rounded-lg shadow-medical-lg transition-all hover:shadow-medical-xl pb-[max(1rem,env(safe-area-inset-bottom))]"
         onClick={handleClick}
       >
         {locale === 'ua' ? 'Записатися на прийом' : 'Book Appointment'}
       </Button>
-    </motion.div>
+    </div>
   );
 }
 
@@ -238,6 +182,32 @@ function ActionFooter({
 export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) {
   const { locale } = useLocale();
   const menuRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Handle mount state
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Handle open animation
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true);
+      // Small delay to allow element to mount before animating
+      const timer = setTimeout(() => {
+        setIsAnimating(true);
+      }, 10);
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimating(false);
+      const timer = setTimeout(() => {
+        setShouldRender(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   // Scroll lock logic
   useEffect(() => {
@@ -275,79 +245,67 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only close if clicking directly on backdrop (not on menu)
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
+  if (!isMounted) return null;
+
   return (
     <>
       {/* Backdrop */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="burger-backdrop"
-            initial={{ opacity: 0, pointerEvents: 'none' }}
-            animate={{ opacity: 1, pointerEvents: 'auto' }}
-            exit={{ opacity: 0, pointerEvents: 'none' }}
-            transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-medical-primary-900/50 backdrop-blur-sm"
-            style={{ zIndex: 99998 }}
-            onClick={handleBackdropClick}
-            aria-hidden="true"
-          />
-        )}
-      </AnimatePresence>
+      <div
+        className="fixed inset-0 bg-medical-primary-900/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out"
+        style={{ 
+          zIndex: 99998,
+          opacity: isAnimating ? 1 : 0,
+          pointerEvents: isAnimating ? 'auto' : 'none'
+        }}
+        onClick={handleBackdropClick}
+        aria-hidden="true"
+      />
 
       {/* Menu Panel */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="burger-menu"
-            id="burger-menu"
-            ref={menuRef}
-            initial={{ x: '100%', pointerEvents: 'none' }}
-            animate={{ x: 0, pointerEvents: 'auto' }}
-            exit={{ x: '100%', pointerEvents: 'none' }}
-            transition={{
-              type: 'spring',
-              stiffness: 300,
-              damping: 30,
-              mass: 1,
-            }}
-            className="fixed top-0 right-0 h-[100dvh] w-full max-w-md bg-slate-50/98 backdrop-blur-md overflow-y-auto overflow-x-hidden -webkit-overflow-scrolling-touch transform-gpu"
-            style={{ zIndex: 99999, willChange: 'transform, opacity' }}
-            role="dialog"
-            aria-modal="true"
-            aria-label={locale === 'ua' ? 'Меню навігації' : 'Navigation menu'}
-          >
-            <div className="flex flex-col min-h-full">
-              {/* Header */}
-              <MenuHeader onClose={onClose} locale={locale} />
+      {shouldRender && (
+        <div
+          ref={menuRef}
+          id="burger-menu"
+          className="fixed top-0 right-0 h-[100dvh] w-full max-w-md bg-slate-50/98 backdrop-blur-md overflow-y-auto overflow-x-hidden"
+          style={{ 
+            zIndex: 99999,
+            transform: isAnimating ? 'translateX(0)' : 'translateX(100%)',
+            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            willChange: 'transform'
+          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label={locale === 'ua' ? 'Меню навігації' : 'Navigation menu'}
+        >
+          <div className="flex flex-col min-h-full">
+            {/* Header */}
+            <MenuHeader onClose={onClose} locale={locale} />
 
-              {/* Navigation Links */}
-              <nav className="flex-1 py-6">
-                {navLinks.map((link, index) => (
-                  <NavLink
-                    key={link.href}
-                    href={link.href}
-                    label={locale === 'ua' ? link.label : link.labelEn}
-                    onClick={handleNavClick}
-                    delay={0.1 + index * 0.05}
-                  />
-                ))}
-              </nav>
+            {/* Navigation Links */}
+            <nav className="flex-1 py-6">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.href}
+                  href={link.href}
+                  label={locale === 'ua' ? link.label : link.labelEn}
+                  onClick={handleNavClick}
+                />
+              ))}
+            </nav>
 
-              {/* Contact Section */}
-              <ContactSection locale={locale} />
+            {/* Contact Section */}
+            <ContactSection locale={locale} />
 
-              {/* Action Footer */}
-              <ActionFooter onOpenBooking={onOpenBooking} locale={locale} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {/* Action Footer */}
+            <ActionFooter onOpenBooking={onOpenBooking} locale={locale} />
+          </div>
+        </div>
+      )}
     </>
   );
 }

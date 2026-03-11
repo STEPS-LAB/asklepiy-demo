@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLocale } from '@/contexts';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Search, User, Mail, Clock, Menu } from 'lucide-react';
 import { Button, LanguageSwitcher } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -54,7 +53,7 @@ export function Header({ onOpenBooking }: HeaderProps) {
   }, []);
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (window.location.pathname === '/' || window.location.pathname === '/ua' || window.location.pathname === '/en') {
+    if (window.location.pathname === '/') {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -73,10 +72,7 @@ export function Header({ onOpenBooking }: HeaderProps) {
 
   return (
     <>
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+      <header
         style={{ zIndex: 99995 }}
         className={cn(
           'fixed top-0 left-0 right-0 transition-all duration-500 h-[80px] bg-white',
@@ -86,11 +82,7 @@ export function Header({ onOpenBooking }: HeaderProps) {
         <div className="container mx-auto px-4 h-full">
           <div className="flex items-center justify-between h-full">
             {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
+            <div>
               <Link href="/" onClick={handleLogoClick} className="group flex items-center">
                 <div className="relative w-[195px] h-[104px]">
                   <Image
@@ -98,10 +90,11 @@ export function Header({ onOpenBooking }: HeaderProps) {
                     alt={locale === 'ua' ? 'Асклепій' : 'Asklepiy'}
                     fill
                     className="object-contain"
+                    priority
                   />
                 </div>
               </Link>
-            </motion.div>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -159,118 +152,108 @@ export function Header({ onOpenBooking }: HeaderProps) {
                   <Phone className="w-4 h-4" />
                 </button>
 
-                <AnimatePresence>
-                  {isPhoneDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 top-full mt-2 w-80 bg-white rounded-sm shadow-medical-xl border border-medical-surface-200 z-50 overflow-hidden"
-                    >
-                      {/* Phone Numbers */}
-                      <div className="border-b border-medical-surface-200 box-border">
-                        <a
-                          href={`tel:${phoneNumbers[0].full}`}
-                          className="flex items-center h-14 px-4 border-b border-medical-surface-100 hover:text-medical-accent-600 transition-colors box-border"
-                        >
-                          <span className="font-medium text-base" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                            {phoneNumbers[0].prefix} {phoneNumbers[0].number}
-                          </span>
-                        </a>
-                        <a
-                          href={`tel:${phoneNumbers[1].full}`}
-                          className="flex items-center h-14 px-4 border-b border-medical-surface-100 hover:text-medical-accent-600 transition-colors box-border"
-                        >
-                          <span className="font-medium text-base" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                            {phoneNumbers[1].prefix} {phoneNumbers[1].number}
-                          </span>
-                        </a>
-                        <a
-                          href={`tel:${phoneNumbers[2].full}`}
-                          className="flex items-center h-14 px-4 hover:text-medical-accent-600 transition-colors box-border"
-                        >
-                          <span className="font-medium text-base" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                            {phoneNumbers[2].prefix} {phoneNumbers[2].number}
-                          </span>
-                        </a>
-                      </div>
-
-                      {/* Email */}
-                      <div className="p-4 border-b border-medical-surface-200">
-                        <span className="text-medical-text-tertiary text-sm block mb-2">Email</span>
-                        <a
-                          href="mailto:info@asklepiy.com"
-                          className="flex items-center gap-2 text-medical-primary-900 font-medium hover:text-medical-accent-600 transition-colors"
-                        >
-                          <Mail className="w-4 h-4 text-medical-accent-600" />
-                          info@asklepiy.com
-                        </a>
-                      </div>
-
-                      {/* Working Hours */}
-                      <div className="p-4 border-b border-medical-surface-200">
-                        <span className="text-medical-text-tertiary text-sm block mb-3">
-                          {locale === 'ua' ? 'Графік роботи контакт центру:' : 'Contact center working hours:'}
+                {isPhoneDropdownOpen && (
+                  <div
+                    className="absolute right-0 top-full mt-2 w-80 bg-white rounded-sm shadow-medical-xl border border-medical-surface-200 z-50 overflow-hidden"
+                  >
+                    {/* Phone Numbers */}
+                    <div className="border-b border-medical-surface-200 box-border">
+                      <a
+                        href={`tel:${phoneNumbers[0].full}`}
+                        className="flex items-center h-14 px-4 border-b border-medical-surface-100 hover:text-medical-accent-600 transition-colors box-border"
+                      >
+                        <span className="font-medium text-base" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                          {phoneNumbers[0].prefix} {phoneNumbers[0].number}
                         </span>
-                        <div className="space-y-1 text-medical-primary-900 font-medium">
-                          <div className="flex justify-between">
-                            <span>{locale === 'ua' ? workingHours.weekdays.ua : workingHours.weekdays.en}:</span>
-                            <span>{workingHours.timeWeekdays}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>{locale === 'ua' ? workingHours.weekend.ua : workingHours.weekend.en}:</span>
-                            <span>{workingHours.timeWeekend}</span>
-                          </div>
+                      </a>
+                      <a
+                        href={`tel:${phoneNumbers[1].full}`}
+                        className="flex items-center h-14 px-4 border-b border-medical-surface-100 hover:text-medical-accent-600 transition-colors box-border"
+                      >
+                        <span className="font-medium text-base" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                          {phoneNumbers[1].prefix} {phoneNumbers[1].number}
+                        </span>
+                      </a>
+                      <a
+                        href={`tel:${phoneNumbers[2].full}`}
+                        className="flex items-center h-14 px-4 hover:text-medical-accent-600 transition-colors box-border"
+                      >
+                        <span className="font-medium text-base" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                          {phoneNumbers[2].prefix} {phoneNumbers[2].number}
+                        </span>
+                      </a>
+                    </div>
+
+                    {/* Email */}
+                    <div className="p-4 border-b border-medical-surface-200">
+                      <span className="text-medical-text-tertiary text-sm block mb-2">Email</span>
+                      <a
+                        href="mailto:info@asklepiy.com"
+                        className="flex items-center gap-2 text-medical-primary-900 font-medium hover:text-medical-accent-600 transition-colors"
+                      >
+                        <Mail className="w-4 h-4 text-medical-accent-600" />
+                        info@asklepiy.com
+                      </a>
+                    </div>
+
+                    {/* Working Hours */}
+                    <div className="p-4 border-b border-medical-surface-200">
+                      <span className="text-medical-text-tertiary text-sm block mb-3">
+                        {locale === 'ua' ? 'Графік роботи контакт центру:' : 'Contact center working hours:'}
+                      </span>
+                      <div className="space-y-1 text-medical-primary-900 font-medium">
+                        <div className="flex justify-between">
+                          <span>{locale === 'ua' ? workingHours.weekdays.ua : workingHours.weekdays.en}:</span>
+                          <span>{workingHours.timeWeekdays}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>{locale === 'ua' ? workingHours.weekend.ua : workingHours.weekend.en}:</span>
+                          <span>{workingHours.timeWeekend}</span>
                         </div>
                       </div>
+                    </div>
 
-                      {/* Social Buttons */}
-                      <div className="p-4 flex gap-3">
-                        <a
-                          href="https://t.me/asklepiy_family"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-2 py-2.5 border-2 border-medical-accent-600 rounded-sm text-medical-accent-600 font-medium hover:bg-medical-accent-50 transition-colors"
-                        >
-                          <Image
-                            src="/images/tg-logo.svg"
-                            alt="Telegram"
-                            width={18}
-                            height={18}
-                            className="w-[18px] h-[18px] invert brightness-0 saturate-100"
-                            style={{ filter: 'invert(39%) sepia(96%) saturate(367%) hue-rotate(147deg) brightness(94%) contrast(86%)' }}
-                          />
-                          Telegram
-                        </a>
-                        <a
-                          href="viber://chat?number=%2B380671838516"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-2 py-2.5 border-2 border-medical-accent-600 rounded-sm text-medical-accent-600 font-medium hover:bg-medical-accent-50 transition-colors"
-                        >
-                          <Image
-                            src="/images/viber-logo.svg"
-                            alt="Viber"
-                            width={18}
-                            height={18}
-                            className="w-[18px] h-[18px] invert brightness-0 saturate-100"
-                            style={{ filter: 'invert(39%) sepia(96%) saturate(367%) hue-rotate(147deg) brightness(94%) contrast(86%)' }}
-                          />
-                          Viber
-                        </a>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    {/* Social Buttons */}
+                    <div className="p-4 flex gap-3">
+                      <a
+                        href="https://t.me/asklepiy_family"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-2.5 border-2 border-medical-accent-600 rounded-sm text-medical-accent-600 font-medium hover:bg-medical-accent-50 transition-colors"
+                      >
+                        <Image
+                          src="/images/tg-logo.svg"
+                          alt="Telegram"
+                          width={18}
+                          height={18}
+                          className="w-[18px] h-[18px] invert brightness-0 saturate-100"
+                          style={{ filter: 'invert(39%) sepia(96%) saturate(367%) hue-rotate(147deg) brightness(94%) contrast(86%)' }}
+                        />
+                        Telegram
+                      </a>
+                      <a
+                        href="viber://chat?number=%2B380671838516"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-2.5 border-2 border-medical-accent-600 rounded-sm text-medical-accent-600 font-medium hover:bg-medical-accent-50 transition-colors"
+                      >
+                        <Image
+                          src="/images/viber-logo.svg"
+                          alt="Viber"
+                          width={18}
+                          height={18}
+                          className="w-[18px] h-[18px] invert brightness-0 saturate-100"
+                          style={{ filter: 'invert(39%) sepia(96%) saturate(367%) hue-rotate(147deg) brightness(94%) contrast(86%)' }}
+                        />
+                        Viber
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Sign In / Dashboard */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 }}
-              >
+              <div>
                 <Link href="/dashboard">
                   <Button variant="primary" size="sm" className="hidden sm:inline-flex shadow-medical-md">
                     <div className="flex items-center gap-2">
@@ -279,11 +262,11 @@ export function Header({ onOpenBooking }: HeaderProps) {
                     </div>
                   </Button>
                 </Link>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       {/* Burger Menu */}
       <BurgerMenu
