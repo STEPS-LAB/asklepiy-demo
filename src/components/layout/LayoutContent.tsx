@@ -1,25 +1,9 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { Header, Footer } from '@/components/layout';
-
-// Dynamic imports for heavy components (loaded on demand)
-const BookingModal = dynamic(
-  () => import('@/features/booking').then((mod) => mod.BookingModal),
-  { 
-    loading: () => null,
-    ssr: false,
-  }
-);
-
-const AIAssistant = dynamic(
-  () => import('@/features/ai-assistant').then((mod) => mod.AIAssistant),
-  { 
-    loading: () => null,
-    ssr: false,
-  }
-);
+import { BookingModal } from '@/features/booking';
+import { AIAssistant } from '@/features/ai-assistant';
 
 export function LayoutContent({ children }: { children: React.ReactNode }) {
   const [isBookingOpen, setIsBookingOpen] = useState(false);

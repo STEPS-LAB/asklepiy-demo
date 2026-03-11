@@ -4,18 +4,9 @@ import { notFound } from 'next/navigation';
 import { ReactQueryProvider, LocaleProvider, AuthProvider, UIProvider } from '@/contexts';
 import { LayoutContent } from '@/components/layout';
 import '../../styles/globals.css';
-import type { Metadata } from 'next';
 
 export function generateStaticParams() {
   return [{ locale: 'ua' }, { locale: 'en' }];
-}
-
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
-  
-  return {
-    title: locale === 'ua' ? 'Асклепій' : 'Asklepiy',
-  };
 }
 
 export default async function LocaleLayout({

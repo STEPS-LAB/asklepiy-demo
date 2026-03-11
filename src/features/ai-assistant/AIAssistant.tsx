@@ -255,7 +255,6 @@ export function AIAssistant() {
       >
         <motion.button
           onClick={toggleOpen}
-          aria-label={isOpen ? 'Close chat' : 'Open AI assistant chat'}
           className={cn(
             'w-14 h-14 rounded-full shadow-medical-glow-lg',
             'bg-gradient-to-br from-medical-accent-600 to-medical-accent-500',
