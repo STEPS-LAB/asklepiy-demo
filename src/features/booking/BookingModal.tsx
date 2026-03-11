@@ -63,9 +63,34 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
   // Sync modal state with UI context
   useEffect(() => {
     setModalOpen(isOpen);
+    
+    // Lock body scroll when modal is open
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.setProperty('--scroll-y', `${window.scrollY}px`);
+    } else {
+      // Restore body scroll
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      const scrollY = document.body.style.getPropertyValue('--scroll-y');
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10));
+        document.body.style.removeProperty('--scroll-y');
+      }
+    }
+    
     return () => {
       if (!isOpen) {
         setModalOpen(false);
+        document.body.style.overflow = '';
+        document.body.style.touchAction = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
       }
     };
   }, [isOpen, setModalOpen]);

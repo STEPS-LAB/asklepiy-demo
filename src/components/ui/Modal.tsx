@@ -30,7 +30,7 @@ export function Modal({
   closeOnBackdropClick = true,
   closeOnEscape = true,
 }: ModalProps) {
-  // Close on escape key
+  // Close on escape key and scroll lock
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && closeOnEscape) {
@@ -40,12 +40,28 @@ export function Modal({
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
+      // Lock body scroll and prevent touch move on iOS
       document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      // Store scroll position to restore later
+      document.body.style.setProperty('--scroll-y', `${window.scrollY}px`);
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      // Restore body scroll
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      // Restore scroll position
+      const scrollY = document.body.style.getPropertyValue('--scroll-y');
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10));
+        document.body.style.removeProperty('--scroll-y');
+      }
     };
   }, [isOpen, onClose, closeOnEscape]);
 

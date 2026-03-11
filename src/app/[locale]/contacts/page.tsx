@@ -76,13 +76,13 @@ export default function ContactsPage() {
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Contact Info */}
-        <Card className="p-6 h-80 md:h-96">
+        <Card className="p-6 min-h-[20rem] md:min-h-[24rem]">
           <h2 className="text-xl font-medium text-medical-primary-900 mb-6">
             {locale === 'ua' ? 'Контактна інформація' : 'Contact information'}
           </h2>
 
           {/* Address */}
-          <div className="flex items-start gap-4 mb-6">
+          <div className="flex items-start gap-4 mb-5">
             <div className="w-12 h-12 bg-medical-accent-100 rounded-sm flex items-center justify-center flex-shrink-0">
               <MapPin className="w-6 h-6 text-medical-accent-600" />
             </div>
@@ -99,7 +99,7 @@ export default function ContactsPage() {
           </div>
 
           {/* Phone Numbers */}
-          <div className="space-y-4 mb-6">
+          <div className="space-y-4 mb-5">
             {contactNumbers.map((contact) => (
               <div key={contact.phone} className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-medical-accent-100 rounded-sm flex items-center justify-center flex-shrink-0">
@@ -140,7 +140,7 @@ export default function ContactsPage() {
         </Card>
 
         {/* Interactive Map */}
-        <Card className="overflow-hidden h-80 md:h-96">
+        <Card className="overflow-hidden min-h-[20rem] md:min-h-[24rem]">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2534.5!2d28.62!3d50.25!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d7d6e7a5e5e5e5%3A0x123456789abcdef!2z0JrQuNGG0LAsINC60LjQvdC-0LLQsCwg0JrQuNGG0LIg0JLQsNC90YHQutC-0LksIDMx!5e0!3m2!1suk!2sua!4v1234567890"
             width="100%"
@@ -254,7 +254,7 @@ export default function ContactsPage() {
                 required
               />
             </div>
-            <Button type="submit" isLoading={isSubmitting} className="w-full" leftIcon={<MessageCircle className="w-4 h-4" />}>
+            <Button type="submit" isLoading={isSubmitting} className="!w-full" leftIcon={<MessageCircle className="w-4 h-4" />}>
               {isSuccess
                 ? locale === 'ua'
                   ? 'Повідомлення відправлено!'

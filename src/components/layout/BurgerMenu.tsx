@@ -288,7 +288,7 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
             animate={{ opacity: 1, pointerEvents: 'auto' }}
             exit={{ opacity: 0, pointerEvents: 'none' }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-medical-primary-900/50 backdrop-blur-sm z-[9998]"
+            className="fixed inset-0 bg-medical-primary-900/50 backdrop-blur-sm z-modal-backdrop"
             onClick={handleBackdropClick}
           />
 
@@ -305,7 +305,7 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
               damping: 30,
               mass: 1,
             }}
-            className="fixed top-0 right-0 h-[100dvh] w-full max-w-md bg-slate-50/98 backdrop-blur-md z-[9999] overflow-y-auto overflow-x-hidden -webkit-overflow-scrolling-touch transform-gpu"
+            className="fixed top-0 right-0 h-[100dvh] w-full max-w-md bg-slate-50/98 backdrop-blur-md z-modal overflow-y-auto overflow-x-hidden -webkit-overflow-scrolling-touch transform-gpu"
             style={{
               willChange: 'transform, opacity',
             }}
