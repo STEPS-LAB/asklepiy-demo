@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useLocale } from '@/contexts';
+import { useLocale, useUI } from '@/contexts';
 import { Phone, Search, User, Mail, Clock, Menu } from 'lucide-react';
 import { Button, LanguageSwitcher } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -37,6 +37,7 @@ interface HeaderProps {
 
 export function Header({ onOpenBooking }: HeaderProps) {
   const { locale } = useLocale();
+  const { isModalOpen } = useUI();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isPhoneDropdownOpen, setIsPhoneDropdownOpen] = useState(false);
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
@@ -51,6 +52,13 @@ export function Header({ onOpenBooking }: HeaderProps) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Hide header on mobile when modal is open
+  useEffect(() => {
+    if (isModalOpen && window.innerWidth < 640) {
+      document.body.style.paddingTop = '0';
+    }
+  }, [isModalOpen]);
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (window.location.pathname === '/') {
@@ -76,7 +84,8 @@ export function Header({ onOpenBooking }: HeaderProps) {
         style={{ zIndex: 99995 }}
         className={cn(
           'fixed top-0 left-0 right-0 transition-all duration-500 h-[80px] bg-white',
-          isScrolled ? 'glass shadow-medical-md' : 'shadow-sm'
+          isScrolled ? 'glass shadow-medical-md' : 'shadow-sm',
+          isModalOpen && 'sm:block hidden'
         )}
       >
         <div className="container mx-auto px-4 h-full">
