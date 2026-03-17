@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useCallback, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { X, ChevronRight, Phone, Clock, Mail } from 'lucide-react';
 import { useLocale } from '@/contexts';
 import { Button } from '@/components/ui';
@@ -60,17 +61,17 @@ function MenuHeader({ onClose, locale }: { onClose: () => void; locale: string }
 function NavLink({
   href,
   label,
-  onClick,
+  onNavigate,
 }: {
   href: string;
   label: string;
-  onClick: () => void;
+  onNavigate: () => void;
 }) {
   return (
     <div>
       <Link
         href={href}
-        onClick={onClick}
+        onClick={onNavigate}
         className="flex items-center justify-between px-6 py-5 text-medical-primary-900 font-medium text-lg hover:bg-medical-surface-100/50 rounded-lg mx-4 transition-colors group"
       >
         <span>{label}</span>
@@ -181,6 +182,7 @@ function ActionFooter({
 // Main Burger Menu Component
 export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) {
   const { locale } = useLocale();
+  const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
@@ -240,9 +242,14 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
-  const handleNavClick = () => {
-    window.scrollTo(0, 0);
+  const handleNavClick = (href: string) => {
     onClose();
+    // Force scroll to top before navigation
+    window.scrollTo(0, 0);
+    // Use router push for proper navigation with scroll reset
+    setTimeout(() => {
+      router.push(href);
+    }, 50);
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -294,7 +301,7 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
                   key={link.href}
                   href={link.href}
                   label={locale === 'ua' ? link.label : link.labelEn}
-                  onClick={handleNavClick}
+                  onNavigate={() => handleNavClick(link.href)}
                 />
               ))}
             </nav>
