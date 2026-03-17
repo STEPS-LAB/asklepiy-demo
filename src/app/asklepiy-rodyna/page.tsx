@@ -104,7 +104,7 @@ export default function AsklepiyRodynaPage() {
   };
 
   return (
-    <div className="pt-[80px]">
+    <>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-medical-primary-50 via-white to-medical-accent-50 py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -475,6 +475,6 @@ export default function AsklepiyRodynaPage() {
 
       {/* Booking Modal */}
       <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
-    </div>
+    </>
   );
 }

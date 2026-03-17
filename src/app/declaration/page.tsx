@@ -111,7 +111,7 @@ export default function DeclarationPage() {
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Form */}
-        <Card className="p-6">
+        <Card className="p-6 lg:mb-8">
           <h2 className="text-xl font-medium text-medical-primary-900 mb-6">
             {locale === 'ua' ? 'Заповнити форму' : 'Fill the form'}
           </h2>
@@ -288,7 +288,7 @@ export default function DeclarationPage() {
             </ul>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-6 mb-8">
             <h3 className="text-lg font-medium text-medical-primary-900 mb-4">
               {locale === 'ua' ? 'Необхідні документи' : 'Required documents'}
             </h3>
