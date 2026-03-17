@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Header, Footer } from '@/components/layout';
+import { Header, Footer, ScrollToTop } from '@/components/layout';
 import { BookingModal } from '@/features/booking';
 import { AIAssistant } from '@/features/ai-assistant';
 import { useLocale } from '@/contexts';
@@ -34,6 +34,7 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <ScrollToTop />
       <a
         href="#main-content"
         onClick={skipToMain}

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useCallback, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { X, ChevronRight, Phone, Clock, Mail } from 'lucide-react';
 import { useLocale } from '@/contexts';
 import { Button } from '@/components/ui';
@@ -61,17 +60,17 @@ function MenuHeader({ onClose, locale }: { onClose: () => void; locale: string }
 function NavLink({
   href,
   label,
-  onNavigate,
+  onClick,
 }: {
   href: string;
   label: string;
-  onNavigate: () => void;
+  onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   return (
     <div>
       <Link
         href={href}
-        onClick={onNavigate}
+        onClick={onClick}
         className="flex items-center justify-between px-6 py-5 text-medical-primary-900 font-medium text-lg hover:bg-medical-surface-100/50 rounded-lg mx-4 transition-colors group"
       >
         <span>{label}</span>
@@ -182,7 +181,6 @@ function ActionFooter({
 // Main Burger Menu Component
 export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) {
   const { locale } = useLocale();
-  const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
@@ -242,14 +240,17 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
-  const handleNavClick = (href: string) => {
-    onClose();
-    // Force scroll to top before navigation
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    // Scroll to top immediately
     window.scrollTo(0, 0);
-    // Use router push for proper navigation with scroll reset
-    setTimeout(() => {
-      router.push(href);
-    }, 50);
+    onClose();
+    // Navigate after a short delay to ensure scroll happens
+    const href = e.currentTarget.href;
+    // Use requestAnimationFrame to ensure scroll is processed
+    requestAnimationFrame(() => {
+      window.location.href = href;
+    });
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
