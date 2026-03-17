@@ -241,6 +241,7 @@ export function BurgerMenu({ isOpen, onClose, onOpenBooking }: BurgerMenuProps) 
   }, [isOpen, onClose]);
 
   const handleNavClick = () => {
+    window.scrollTo(0, 0);
     onClose();
   };
 
